@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">walplay</string>
+
+    <!--PLAYER-->
+    <string name="player_btn_pause">暂停</string>
+    <string name="player_btn_play">播放</string>
+    <string name="player_btn_previousPiece">上一首</string>
+    <string name="player_btn_nextPiece">下一首</string>
+    <string name="player_btn_playMode">播放模式</string>
+
+    <string name="player_playMode_1">顺序播放</string>
+    <string name="player_playMode_2">顺序循环</string>
+    <string name="player_playMode_3">单曲循环</string>
+    <string name="player_playMode_4">列表循环</string>
+    <string name="player_playMode_5">随机播放</string>
+
+</resources>
