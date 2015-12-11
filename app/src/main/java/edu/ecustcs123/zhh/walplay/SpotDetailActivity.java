@@ -20,6 +20,7 @@ public class SpotDetailActivity extends AppCompatActivity {
     private TextView tv_Title;
     private PlayerReceiver playerReceiver;
     private PlayingInfo playingInfo;
+    private TabHost mTabHost;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +39,13 @@ public class SpotDetailActivity extends AppCompatActivity {
         transaction.add(R.id.fragmentContainer_controlPanel, playerPanelFragment);
         transaction.commit();
 
+        //mTabHost布局
+        mTabHost=(TabHost)findViewById(R.id.tabHost);
+        mTabHost.setup();
+        mTabHost.addTab(mTabHost.newTabSpec("tab1").setIndicator("图片").setContent(R.id.tab1));
+        mTabHost.addTab(mTabHost.newTabSpec("tab2").setIndicator("评论").setContent(R.id.tab2));
+        mTabHost.addTab(mTabHost.newTabSpec("tab3").setIndicator("更多").setContent(R.id.tab3));
 
-        TabHost T;
+
     }
 }

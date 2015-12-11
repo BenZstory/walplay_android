@@ -15,7 +15,10 @@
     <string name="player_playMode_5">随机播放</string>
 
     <!--SpotDetail-->
-    <string name="Current_Spot_Name"></string>
+    <string name="Current_Spot_Name_For_Test">Current_Spot_Name_For_Test</string>
+    <string name="Current_Spot_Location_For_Test">Current_Spot_Location_For_Test</string>
+    <string name="Current_Spot_OtherInfo">Current_Spot_OtherInfo</string>
+    <string name="Current_Spot_Lever_For_Test">AAA</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
