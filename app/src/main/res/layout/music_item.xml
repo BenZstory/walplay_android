@@ -4,31 +4,40 @@
     android:layout_height="match_parent"
     android:orientation="horizontal">
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="6"
+        android:layout_weight="0.75"
         android:orientation="vertical"
         >
         <TextView
+            android:singleLine="true"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:background="#bfbfbf"
+            android:textStyle="bold"
             android:id="@+id/tv_itemMusicName"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"/>
+            android:layout_height="0dp"
+            android:layout_weight="0.6"/>
         <TextView
+            android:singleLine="true"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
             android:id="@+id/tv_itemMusicInfo"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_height="0dp"
+            android:layout_weight="0.4"/>
     </LinearLayout>
     <TextView
         android:id="@+id/tv_itemMusicDuration"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="2"/>
+        android:layout_marginLeft="10dp"
+        android:layout_weight="0.25"/>
 
     <!--<ImageButton-->
-        <!--android:id="@+id/ibtn_musicitem"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_weight="1"/>-->
+    <!--android:id="@+id/ibtn_musicitem"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_weight="1"/>-->
 </LinearLayout>
