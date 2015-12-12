@@ -18,6 +18,8 @@ public class SpotDetailActivity extends AppCompatActivity {
     private List<Mp3Info> mp3Infos;
     private SeekBar seekBar;
     private TextView tv_Title;
+    private PlayingInfo playingInfo;
+    private TabHost mTabHost;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,5 +48,10 @@ public class SpotDetailActivity extends AppCompatActivity {
         transaction.add(R.id.fragmentContainer_controlPanel, playerPanelFragment);
         transaction.commit();
         TabHost T;
+        mTabHost=(TabHost)findViewById(R.id.tabHost);
+        mTabHost.setup();
+        mTabHost.addTab(mTabHost.newTabSpec("tab1").setIndicator("图片").setContent(R.id.tab1));
+        mTabHost.addTab(mTabHost.newTabSpec("tab2").setIndicator("评论").setContent(R.id.tab2));
+        mTabHost.addTab(mTabHost.newTabSpec("tab3").setIndicator("更多").setContent(R.id.tab3));
     }
 }

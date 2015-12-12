@@ -142,12 +142,15 @@ public class PlayerPanelFragment extends Fragment {
                     switch (playingInfo.getPlayMode()) {
                         case AppConstant.PlayMode.MODE_RANDOM:
                             Toast.makeText(getActivity(), "随机播放", Toast.LENGTH_SHORT).show();
+                            btnPlayMode.setBackgroundResource(R.drawable.glyphicons_random);
                             break;
                         case AppConstant.PlayMode.MODE_REPEAT:
-                            Toast.makeText(getActivity(), "单曲循环", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(),"单曲循环",Toast.LENGTH_SHORT).show();
+                            btnPlayMode.setBackgroundResource(R.drawable.glyphicons_roundabout);
                             break;
                         case AppConstant.PlayMode.MODE_ROUND:
-                            Toast.makeText(getActivity(), "列表循环", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(),"列表循环", Toast.LENGTH_SHORT).show();
+                            btnPlayMode.setBackgroundResource(R.drawable.glyphicons_repeat);
                             break;
                     }
                     break;
@@ -160,6 +163,7 @@ public class PlayerPanelFragment extends Fragment {
                 case R.id.btn_playerPlayMusic://播放|暂停
                     if (playingInfo.isPlaying()) {
                         //暂停
+                        playBtn.setBackgroundResource(R.drawable.glyphicons_play);
                         playingInfo.setIsPlaying(false);
                         playingInfo.setIsPause(true);
                         intent.putExtra("MSG", AppConstant.PlayerMsg.PAUSE_MSG);
@@ -169,6 +173,7 @@ public class PlayerPanelFragment extends Fragment {
                     } else {
                         if (playingInfo.isPause()) {
                             //恢复播放
+                            playBtn.setBackgroundResource(R.drawable.glyphicons_pause);
                             playingInfo.setIsPlaying(true);
                             playingInfo.setIsPause(false);
                             intent.putExtra("MSG", AppConstant.PlayerMsg.CONTINUE_MSG);
