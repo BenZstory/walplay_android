@@ -18,27 +18,33 @@ public class SpotDetailActivity extends AppCompatActivity {
     private List<Mp3Info> mp3Infos;
     private SeekBar seekBar;
     private TextView tv_Title;
-    private PlayerReceiver playerReceiver;
-    private PlayingInfo playingInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_spot_detail);
         Intent intent = getIntent();
-        Bundle bundle = intent.getBundleExtra(AppConstant.KEY.PARCELABLE_PLAYINGINFO);
-        Log.d(AppConstant.LOG.Com_Frag_Aty+"INTENT", String.valueOf(intent));
-
+        int tmp = intent.getIntExtra("listPos", -1);
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         PlayerPanelFragment playerPanelFragment = new PlayerPanelFragment();
-        playerPanelFragment.setArguments(bundle);           //获得playingInfo
-        Log.d(AppConstant.LOG.Com_Frag_Aty+"_SAVING", String.valueOf(bundle));
-        Log.d(AppConstant.LOG.Com_Frag_Aty, "putBundle_spotAty");
+
+        if(tmp != -1){
+            //通过点击item进入detail,需要重置listPos
+            Log.d(AppConstant.LOG.NewSpotPlaying+"_ATY", String.valueOf(tmp));
+            Bundle bundle = new Bundle();
+            bundle.putInt(AppConstant.KEY.NEW_PLAYING,tmp);
+            playerPanelFragment.setArguments(bundle);
+        }else{
+            Bundle bundle = intent.getBundleExtra(AppConstant.KEY.PARCELABLE_PLAYINGINFO);
+            Log.d(AppConstant.LOG.Com_Frag_Aty+"INTENT", String.valueOf(intent));
+            playerPanelFragment.setArguments(bundle);           //获得playingInfo
+            Log.d(AppConstant.LOG.Com_Frag_Aty+"_SAVING", String.valueOf(bundle));
+            Log.d(AppConstant.LOG.Com_Frag_Aty, "putBundle_spotAty");
+        }
+
         transaction.add(R.id.fragmentContainer_controlPanel, playerPanelFragment);
         transaction.commit();
-
-
         TabHost T;
     }
 }
