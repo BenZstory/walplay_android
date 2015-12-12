@@ -67,7 +67,7 @@ public class PlayingInfo implements Parcelable {
         setIsPlaying(false);
         setIsPause(false);
         setCurrentTime(0);
-        setDuration(0);
+        setDuration(100);
         setPlayMode(0);
     }
 
