@@ -20,7 +20,17 @@ public class DownloadThread extends Thread{
     private int block;
 
     private int threadId = -1;
+
+    public int getDownLength() {
+        return downLength;
+    }
+
     private int downLength = 0;
+
+    public boolean isFinish() {
+        return finish;
+    }
+
     private boolean finish = false;
     private FileDownloader downloader;
 
@@ -68,7 +78,7 @@ public class DownloadThread extends Thread{
                 }
                 threadFile.close();
                 inputStream.close();
-                Log.d(TAG,"Thread " + this.threadId +" download finished!");
+                Log.d(TAG, "Thread " + this.threadId + " download finished!");
                 finish = true;
             } catch (IOException e) {
                 downLength = -1;

@@ -14,7 +14,7 @@ import java.util.Map;
 public class FileService {
     private DBOpenHelper dbOpenHelper;
     public FileService(Context context) {
-        DBOpenHelper = new DBOpenHelper(context);
+        dbOpenHelper = new DBOpenHelper(context);
     }
 
     /**
@@ -86,14 +86,4 @@ public class FileService {
                 new Object[] {path});
         db.close();
     }
-
-
-
-
-
-
-
-
-
-
 }
