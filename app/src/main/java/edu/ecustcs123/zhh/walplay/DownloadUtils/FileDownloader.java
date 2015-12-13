@@ -29,6 +29,11 @@ public class FileDownloader {
     private File saveFile;
     private int downloadSize = 0;
     private boolean exit;       //停止下载
+
+    public int getFileSize() {
+        return fileSize;
+    }
+
     private int fileSize;
     private Map<Integer, Integer> data = new ConcurrentHashMap<Integer, Integer>();
     private int block;//每条线程下载的长度;

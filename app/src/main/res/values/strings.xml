@@ -20,6 +20,16 @@
     <string name="Current_Spot_OtherInfo">Current_Spot_OtherInfo</string>
     <string name="Current_Spot_Lever_For_Test">AAA</string>
 
+
+    <!-- testtesttest-->
+    <string name="success">success</string>
+    <string name="error">error</string>
+    <string name="path"></string>
+    <string name="fileaddress2"></string>
+    <string name="button">开始播放</string>
+    <string name="stopbutton">停止播放</string>
+    <string name="sdcarderror">sdcarderror</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 

@@ -13,11 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ListActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <!--
              ATTENTION: This was auto-generated to add Google Play services to your project for
@@ -29,11 +25,18 @@
 
         <service android:name=".PlayerService">
             <intent-filter>
-                <action android:name="edu.ecustcs123.zhh.walplay.PLAYER_SERVICE"></action>
+                <action android:name="edu.ecustcs123.zhh.walplay.PLAYER_SERVICE" />
             </intent-filter>
         </service>
 
-        <activity android:name=".SpotDetailActivity"></activity>
+        <activity android:name=".SpotDetailActivity" />
+        <activity android:name=".TestMainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
