@@ -75,7 +75,7 @@ public class Player implements MediaPlayer.OnBufferingUpdateListener, MediaPlaye
         try {
             mediaPlayer.reset();
             mediaPlayer.setDataSource(url); // 设置数据源
-            mediaPlayer.prepare(); // prepare自动播放
+            mediaPlayer.prepareAsync(); // prepare自动播放
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
         } catch (SecurityException e) {
@@ -122,6 +122,5 @@ public class Player implements MediaPlayer.OnBufferingUpdateListener, MediaPlaye
                 * mediaPlayer.getCurrentPosition() / mediaPlayer.getDuration();
         Log.e(currentProgress + "% play", percent + " buffer");
     }
-
 }
 

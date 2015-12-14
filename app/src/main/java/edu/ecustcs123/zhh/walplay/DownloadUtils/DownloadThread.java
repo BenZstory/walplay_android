@@ -44,6 +44,9 @@ public class DownloadThread extends Thread{
         this.downLength = downLength;
     }
 
+
+
+
     @Override
     public void run() {
         if(downLength<block) {//未下载完成
@@ -59,7 +62,6 @@ public class DownloadThread extends Thread{
                 //TODO：设置浏览器类型
 
                 http.setRequestProperty("Connection", "Keep-Alive");//设置为持久连接
-
                 InputStream inputStream = http.getInputStream();
                 byte[] buffer = new byte[1024];
                 int offset = 0;
@@ -67,14 +69,16 @@ public class DownloadThread extends Thread{
 
                 //RandomAccessFile更容易定位操作
                 RandomAccessFile threadFile = new RandomAccessFile(this.saveFile, "rwd");
+                Log.d("WPTEST_ADD", String.valueOf(saveFile));
                 threadFile.seek(startPos);
                 while(!downloader.isExit() &&
                         (offset = inputStream.read(buffer,0,1024)) != -1){
                     threadFile.write(buffer, 0, offset);
                     downLength += offset;
                     //TODO:更新线程已经下载位置
-                    //downloader.update(this.threadId, downLength);
-                    //TODO:downloader.appand(offset);
+                    downloader.update(this.threadId, downLength);
+                    downloader.append(offset);
+
                 }
                 threadFile.close();
                 inputStream.close();

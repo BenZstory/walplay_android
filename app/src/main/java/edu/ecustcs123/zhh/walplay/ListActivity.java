@@ -66,13 +66,21 @@ public class ListActivity extends AppCompatActivity {
         //TODO:不仅只是播放，还应有别的按钮，如何使item部分被点击
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            Log.d("WP_Clicked------", String.valueOf(position));
+            //TODO:SpotService(pos)->PlayerService(pos)
+
+            //把新spot事件交给SpotService处理
+            Intent intent = new Intent(AppConstant.ACTION.SPOT_SERVICE);
+            intent.setPackage("edu.ecustcs123.zhh.walplay");
+            intent.putExtra("spotId",position);
+            startService(intent);
+
+            /*Log.d("WP_Clicked------", String.valueOf(position));
             Intent intent  = new Intent();
             intent.putExtra("MSG", AppConstant.PlayerMsg.PLAY_MSG);
             intent.putExtra("listPos", position);
             intent.setAction(AppConstant.ACTION.MUSIC_SERVICE);
             intent.setPackage("edu.ecustcs123.zhh.walplay");
-            startService(intent);
+            startService(intent);*/
             final Intent intent2 = new Intent();
             intent2.setClass(ListActivity.this, SpotDetailActivity.class);
             intent2.putExtra("listPos", position);

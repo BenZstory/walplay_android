@@ -24,8 +24,8 @@
     <!-- testtesttest-->
     <string name="success">success</string>
     <string name="error">error</string>
-    <string name="path"></string>
-    <string name="fileaddress2"></string>
+    <string name="path">wtf</string>
+    <string name="fileaddress2">http://222.186.30.212:8082/demo_store/2015/12/13/18130acf26be437ceb9f9e63b5479624.mp3</string>
     <string name="button">开始播放</string>
     <string name="stopbutton">停止播放</string>
     <string name="sdcarderror">sdcarderror</string>

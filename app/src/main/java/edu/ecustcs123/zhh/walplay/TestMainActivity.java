@@ -122,7 +122,7 @@ public class TestMainActivity extends AppCompatActivity {
 
                         @Override
                         public void run() {
-                            player.playUrl(pathText.getText().toString());
+                            player.playUrl(new String("/storage/emulated/0/18130acf26be437ceb9f9e63b5479624.mp3"));
                         }
                     }).start();
                     break;
@@ -173,6 +173,7 @@ public class TestMainActivity extends AppCompatActivity {
             DownloadProgressListener downloadProgressListener = new DownloadProgressListener() {
                 @Override
                 public void onDownloadSize(int size) {
+                    Log.d(AppConstant.LOG.DownloadTest, String.valueOf(size));
                     Message msg = new Message();
                     msg.what = PROCESSING;
                     msg.getData().putInt("size", size);
@@ -184,9 +185,10 @@ public class TestMainActivity extends AppCompatActivity {
                 try {
                     // 实例化一个文件下载器
                     loader = new FileDownloader(getApplicationContext(), path,
-                            saveDir, 3);
+                            saveDir, 1);
                     // 设置进度条最大值
                     progressBar.setMax(loader.getFileSize());
+                    Log.d(AppConstant.LOG.DownloadTest,"listener done!");
                     loader.download(downloadProgressListener);
                 } catch (Exception e) {
                     e.printStackTrace();

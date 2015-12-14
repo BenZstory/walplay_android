@@ -15,10 +15,7 @@ import android.widget.TextView;
 import java.util.List;
 
 public class SpotDetailActivity extends AppCompatActivity {
-    private List<Mp3Info> mp3Infos;
-    private SeekBar seekBar;
-    private TextView tv_Title;
-    private PlayingInfo playingInfo;
+
     private TabHost mTabHost;
 
     @Override
@@ -47,7 +44,6 @@ public class SpotDetailActivity extends AppCompatActivity {
 
         transaction.add(R.id.fragmentContainer_controlPanel, playerPanelFragment);
         transaction.commit();
-        TabHost T;
         mTabHost=(TabHost)findViewById(R.id.tabHost);
         mTabHost.setup();
         mTabHost.addTab(mTabHost.newTabSpec("tab1").setIndicator("图片").setContent(R.id.tab1));

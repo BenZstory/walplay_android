@@ -2,6 +2,7 @@ package edu.ecustcs123.zhh.walplay.DownloadUtils;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.CharConversionException;
 import java.io.File;
@@ -11,6 +12,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -45,6 +47,16 @@ public class FileDownloader {
     public void setExit(boolean exit) {
         this.exit = exit;
     }
+
+    public void append(int size){
+        downloadSize += size;
+    }
+
+    public void update(int threadId, int downLength){
+        data.put(threadId, downLength);
+        fileService.update(downloadUrl, threadId, downLength);
+    }
+
     /**
      * @param context
      * @param downloadUrl
@@ -63,11 +75,12 @@ public class FileDownloader {
             threads = new DownloadThread[threadNum];//
             HttpURLConnection http =
                     (HttpURLConnection) url.openConnection();
-            http.setConnectTimeout(5 * 1000); //5s
+            http.setConnectTimeout(10 * 1000); //5s
             http.setRequestMethod("GET");   //GET方法获得数据，很自然
             http.setRequestProperty("Charset","UTF-8");
             http.setRequestProperty("Connection","Keep-Alive");
             http.connect();
+            printResponseHeader(http);
 
             if(http.getResponseCode() == 200){
                 this.fileSize = http.getContentLength();
@@ -193,5 +206,45 @@ public class FileDownloader {
         }
         return this.downloadSize;
     }
+
+    /**
+     * 获取Http响应头字段
+     *
+     * @param http
+     * @return
+     */
+    public static Map<String, String> getHttpResponseHeader(
+            HttpURLConnection http) {
+        Map<String, String> header = new LinkedHashMap<String, String>();
+        for (int i = 0;; i++) {
+            String mine = http.getHeaderField(i);
+            if (mine == null)
+                break;
+            header.put(http.getHeaderFieldKey(i), mine);
+        }
+        return header;
+    }
+
+    /**
+     * 打印Http头字段
+     *
+     * @param http
+     */
+    public static void printResponseHeader(HttpURLConnection http) {
+        Map<String, String> header = getHttpResponseHeader(http);
+        for (Map.Entry<String, String> entry : header.entrySet()) {
+            String key = entry.getKey() != null ? entry.getKey() + ":" : "";
+            print(key + entry.getValue());
+        }
+    }
+
+    private static void print(String msg) {
+        Log.i(TAG, msg);
+    }
+
+
+
+
+
 
 }
