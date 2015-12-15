@@ -57,6 +57,7 @@
     </LinearLayout>
 
     <TabHost
+        android:background="#BFBFBF"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/tabHost"
@@ -68,51 +69,21 @@
             android:orientation="vertical">
 
             <TabWidget
+
                 android:id="@android:id/tabs"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"></TabWidget>
 
+            <android.support.v4.view.ViewPager
+                android:id="@+id/viewpager"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" />
+            <!-- 将tabhost的tabcontent隐藏，用viewPage填充 -->
             <FrameLayout
                 android:id="@android:id/tabcontent"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginTop="3dp"
-                android:layout_weight="1">
-
-                <LinearLayout
-                    android:id="@+id/tab1"
-                    android:layout_width="match_parent"
-                    android:layout_height="269dp"
-                    android:orientation="vertical">
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/CurrentSpotPic"
-                        android:background="@drawable/spotpic4test"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/tab2"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-                    <ListView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/CurrentSpotCommentList"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/tab3"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/CurrentSpotOtherInfo"
-                        android:text="@string/Current_Spot_OtherInfo"/>
-                </LinearLayout>
+                android:visibility="gone"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" >
             </FrameLayout>
         </LinearLayout>
     </TabHost>
