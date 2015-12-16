@@ -56,8 +56,6 @@ public class MapActivity extends AppCompatActivity {
                 locationClient.start();
             }
         });
-
-
     }
 
     @Override
@@ -137,9 +135,5 @@ public class MapActivity extends AppCompatActivity {
         option.setIsNeedLocationPoiList(true);//��ѡ��Ĭ��false�������Ƿ���ҪPOI�����������BDLocation.getPoiList��õ�
         locationClient.setLocOption(option);
     }
-
-
-
-
 
 }

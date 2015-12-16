@@ -20,22 +20,44 @@
             android:id="@+id/tv_lat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
             />
         <TextView
             android:id="@+id/tv_lng"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
-    <Button
+    <LinearLayout
+        android:id="@+id/spotNotifyLayout"
         android:layout_below="@+id/llLayout"
-        android:id="@+id/btn_remoteTest"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="TESTTEST"
-        />
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv_spotInfo"
+            android:text="@string/outside"
+            android:layout_weight="6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/btn_startSpotPlay"
+            android:text="@string/startSpotPlay"
+            android:layout_weight="2"
+            android:clickable="false"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/btn_startLoc"
+            android:text="TEST"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
 
         <ListView
-            android:layout_below="@+id/btn_remoteTest"
+            android:layout_below="@+id/spotNotifyLayout"
             android:id="@+id/lv_musiclistview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

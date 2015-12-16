@@ -36,6 +36,9 @@ public class ListActivity extends AppCompatActivity {
 
     private TextView tv_latitude;
     private TextView tv_longitude;
+    private TextView tv_spotInfo;
+    private Button btn_startSpotPlay;
+    private Button btn_startLoc;
 
     @Override
     protected void onResume() {
@@ -60,7 +63,7 @@ public class ListActivity extends AppCompatActivity {
         transaction.commit();
 
 
-        //TODO 下载remoteMusic
+        /*//TODO 下载remoteMusic
         btnRemoteTest = (Button) findViewById(R.id.btn_remoteTest);
         btnRemoteTest.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,17 +74,30 @@ public class ListActivity extends AppCompatActivity {
                 intent.setPackage("edu.ecustcs123.zhh.walplay");
                 startService(intent);
             }
-        });
+        });*/
 
         //TODO 显示loc latlng
         tv_latitude = (TextView) findViewById(R.id.tv_lat);
         tv_longitude = (TextView) findViewById(R.id.tv_lng);
+        tv_spotInfo = (TextView) findViewById(R.id.tv_spotInfo);
+        btn_startSpotPlay = (Button) findViewById(R.id.btn_startSpotPlay);
+        btn_startLoc = (Button) findViewById(R.id.btn_startLoc);
+
+        btn_startLoc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent startLoc = new Intent(AppConstant.ACTION.START_LBS_SERVICE);
+                startLoc.setPackage("edu.ecustcs123.zhh.walplay");
+                startService(startLoc);
+            }
+        });
 
 
         //注册lbsReceiver，处理每次返回的lbs信息
         lbsReceiver = new LBSReceiver();
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(AppConstant.ACTION.GET_LOC);
+        intentFilter.addAction(AppConstant.ACTION.NOTIFY_SPOT);
         this.registerReceiver(lbsReceiver,intentFilter);
 
         Intent intent = new Intent(AppConstant.ACTION.START_LBS_SERVICE);
@@ -132,9 +148,18 @@ public class ListActivity extends AppCompatActivity {
     public class LBSReceiver extends BroadcastReceiver{
         @Override
         public void onReceive(Context context, Intent intent) {
-            Log.d(AppConstant.LOG.WPLBSDEBUG,"Get LBS return!");
-            tv_latitude.setText(String.valueOf(intent.getDoubleExtra("latitude",0.0)));
-            tv_longitude.setText(String.valueOf(intent.getDoubleExtra("longitude",0.0)));
+            String action = intent.getAction();
+            if(action.equals(AppConstant.ACTION.GET_LOC)){
+                Log.d(AppConstant.LOG.WPLBSDEBUG,"Get LBS return!");
+                tv_latitude.setText(String.valueOf(intent.getDoubleExtra("latitude",0.0)));
+                tv_longitude.setText(String.valueOf(intent.getDoubleExtra("longitude",0.0)));
+            }else if(action.equals(AppConstant.ACTION.NOTIFY_SPOT)){
+                int spotId = intent.getIntExtra("locArea",-1);
+                Log.d(AppConstant.LOG.WPLBSDEBUG+"_receiveSpot", String.valueOf(spotId));
+                StringBuffer sb = new StringBuffer(256);
+                tv_spotInfo.setText(getString(R.string.inside1)+String.valueOf(spotId)+getString(R.string.inside2));
+                btn_startSpotPlay.setClickable(true);
+            }
         }
     }
 

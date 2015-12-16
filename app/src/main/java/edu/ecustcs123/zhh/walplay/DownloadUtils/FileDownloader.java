@@ -250,9 +250,4 @@ public class FileDownloader {
         Log.i(TAG, msg);
     }
 
-
-
-
-
-
 }
