@@ -13,6 +13,9 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -48,6 +51,9 @@
                 <action android:name="edu.ecustcs123.zhh.walplay.SPOT_SERVICE" />
             </intent-filter>
         </service>
+
+        <!--<service android:name="com.baidu.location.f" android:enabled="true" android:process=":remote">-->
+        <!--</service>-->
 
         <activity android:name=".MapActivity">
             <intent-filter>

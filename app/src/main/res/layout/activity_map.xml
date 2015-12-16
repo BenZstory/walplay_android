@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,24 +7,33 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
     tools:context="edu.ecustcs123.zhh.walplay.MapActivity">
 
     <LinearLayout
         android:id="@+id/mapInfo"
+        android:layout_above="@+id/mapViewLayout"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="50dp">
         <RelativeLayout
             android:id="@+id/viewLatLng"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/btn_startLoc"
+                android:text="开始定位"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
             <TextView
-                android:id="@+id/mapLat"
+                android:id="@+id/tv_mapLat"
+                android:text="test"
                 android:layout_alignParentLeft="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
-                android:id="@+id/mapLng"
+                android:id="@+id/tv_mapLng"
+                android:text="test"
                 android:layout_alignParentRight="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -44,4 +53,4 @@
         </com.baidu.mapapi.map.MapView>
     </LinearLayout>
 
-</RelativeLayout>
+</LinearLayout>
