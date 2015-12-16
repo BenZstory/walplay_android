@@ -43,6 +43,9 @@ public class MainActivity extends android.support.v7.app.ActionBarActivity imple
         viewPager = (ViewPager) this.findViewById(R.id.MainViewPager);
         actionBar = getSupportActionBar();
         actionBar.setNavigationMode(android.support.v7.app.ActionBar.NAVIGATION_MODE_TABS);
+        //去除默认ActionBar
+        actionBar.setDisplayShowHomeEnabled(false);
+        actionBar.setDisplayShowTitleEnabled(false);
 
 
         //循环遍历 初始化Actionbar中的Tab
