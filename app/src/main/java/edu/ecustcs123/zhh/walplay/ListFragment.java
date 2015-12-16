@@ -1,7 +1,7 @@
 package edu.ecustcs123.zhh.walplay;
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -77,11 +77,13 @@ public class ListFragment extends Fragment {
             intent.setAction(AppConstant.ACTION.MUSIC_SERVICE);
             intent.setPackage("edu.ecustcs123.zhh.walplay");
             getActivity().startService(intent);
+
+
             final Intent intent2 = new Intent();
-            intent2.setClass(getActivity(), SpotDetailActivity.class);
+            intent2.setClass(getActivity(), PlayerService.class);
             intent2.putExtra("listPos", position);
-            startActivity(intent2);
 //            Log.d("startPlaying-->", String.valueOf(position));
+            getFragmentManager().beginTransaction().replace(R.id.List_Fragment,new InfoFragment()).addToBackStack(null).commit();
         }
     }
 

@@ -138,9 +138,7 @@ public class PlayerPanelFragment extends android.support.v4.app.Fragment {
             switch (v.getId()) {
                 case R.id.tv_titlePlayingMusic:
                     //跳转详情界面
-                    intent.setClass(getActivity(),SpotDetailActivity.class);
-                    intent.putExtra("listPos", playingInfo.getListPos());
-                    startActivity(intent);
+                    getFragmentManager().beginTransaction().replace(R.id.List_Fragment,new InfoFragment()).addToBackStack(null).commit();
                     break;
                 case R.id.btn_playerPlayMode:
                     //更改播放模式

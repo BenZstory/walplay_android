@@ -28,7 +28,7 @@ public class MainActivity extends android.support.v7.app.ActionBarActivity imple
 
         //加载各个Fragment
         tabsList.add(new ActionBarTab("列表",ListFragment.class));
-        tabsList.add(new ActionBarTab("详情",ListFragment.class));
+        tabsList.add(new ActionBarTab("详情",InfoFragment.class));
 
         FragmentManager fragmentManager=getSupportFragmentManager();
         android.support.v4.app.FragmentTransaction transaction = fragmentManager.beginTransaction();

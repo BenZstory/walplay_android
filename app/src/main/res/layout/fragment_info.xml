@@ -2,7 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="edu.ecustcs123.zhh.walplay.InfoFragment">
+    tools:context="edu.ecustcs123.zhh.walplay.InfoFragment"
+    android:id="@+id/Info_Fragment">
 
     <LinearLayout
         android:orientation="horizontal"
