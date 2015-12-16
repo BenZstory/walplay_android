@@ -1,9 +1,10 @@
 package edu.ecustcs123.zhh.walplay;
 
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.app.LocalActivityManager;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -25,7 +26,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SpotDetailActivity extends Activity {
+public class SpotDetailActivity extends FragmentActivity {
     private List<Mp3Info> mp3Infos;
     private SeekBar seekBar;
     private TextView tv_Title;
@@ -46,7 +47,7 @@ public class SpotDetailActivity extends Activity {
 
         Intent intent = getIntent();
         int tmp = intent.getIntExtra("listPos", -1);
-        FragmentManager fragmentManager = getFragmentManager();
+        FragmentManager fragmentManager=getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         PlayerPanelFragment playerPanelFragment = new PlayerPanelFragment();
 
@@ -64,7 +65,7 @@ public class SpotDetailActivity extends Activity {
             Log.d(AppConstant.LOG.Com_Frag_Aty, "putBundle_spotAty");
         }
 
-        transaction.add(R.id.fragmentContainer_controlPanel, playerPanelFragment);
+        transaction.add(R.id.fragmentContainer_controlPanel,playerPanelFragment);
         transaction.commit();
 
         //定义一个放view的list，用于存放ViewPager用到的View

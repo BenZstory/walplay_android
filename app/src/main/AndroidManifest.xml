@@ -27,18 +27,20 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".SpotDetailActivity" />
-        <activity android:name=".TestMainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        <activity android:name=".SpotDetailActivity">
         </activity>
+        <activity android:name=".TestMainActivity"></activity>
         <activity android:name=".T1Activity" />
         <activity android:name=".T2Activity" />
         <activity android:name=".T3Activity" />
-        <activity android:name=".EmptyActivity"></activity>
+        <activity android:name=".EmptyActivity" />
+        <activity android:name=".MainActivity">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        </activity>
     </application>
 
 </manifest>

@@ -1,7 +1,7 @@
 package edu.ecustcs123.zhh.walplay;
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,6 +16,8 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import java.util.HashMap;
 import java.util.List;
+
+
 /**
  * Created by BenZ on 2015/12/8.
  * zhengbin0320@gmail.com
@@ -52,10 +54,10 @@ public class ListActivity extends AppCompatActivity {
         mMusicListView.setOnItemClickListener(new MusicItemOnClickListener());//注册click监听器，自定义实现listener
         mp3Infos = MusicListUtil.getMp3Infos(this);//从数据库获取歌曲列表
         setListAdapter(MusicListUtil.getMusicMaps(mp3Infos));//bind mp3 list
-        FragmentManager fragmentManager = getFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        android.support.v4.app.FragmentTransaction transaction = fragmentManager.beginTransaction();
         playerPanelFragment = new PlayerPanelFragment();
-        transaction.add(R.id.fragmentContainer_controlPanel, playerPanelFragment);
+        transaction.add(R.id.fragmentContainer_controlPanel,playerPanelFragment);
         transaction.commit();
     }
 
@@ -88,5 +90,5 @@ public class ListActivity extends AppCompatActivity {
                 new int[] {R.id.tv_itemMusicName,R.id.tv_itemMusicInfo,R.id.tv_itemMusicDuration}
         );
         mMusicListView.setAdapter(mAdapter);
-    };
+    }
 }
