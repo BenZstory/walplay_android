@@ -84,8 +84,6 @@ public class MapActivity extends AppCompatActivity {
         @Override
         public void onReceiveLocation(BDLocation bdLocation) {
             Log.e(AppConstant.LOG.WPMAPDEBUG,"------------------");
-
-
             Log.e(AppConstant.LOG.WPMAPDEBUG, String.valueOf(bdLocation.getLocType()));
             StringBuffer sb = new StringBuffer(256);
             sb.append("error code:");

@@ -2,7 +2,10 @@ package edu.ecustcs123.zhh.walplay;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +17,9 @@ import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
+
 import java.util.HashMap;
 import java.util.List;
 /**
@@ -26,6 +32,10 @@ public class ListActivity extends AppCompatActivity {
     private List<Mp3Info> mp3Infos;//保存mp3info的列表
     private SimpleAdapter mAdapter;//列表adapter
     private PlayerPanelFragment playerPanelFragment;
+    private LBSReceiver lbsReceiver;
+
+    private TextView tv_latitude;
+    private TextView tv_longitude;
 
     @Override
     protected void onResume() {
@@ -39,9 +49,6 @@ public class ListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
-        //init();
-        //initWidgetPointer();//FindViewById
-        //setOnClickListener();//添加监听器
         mMusicListView = (ListView) findViewById(R.id.lv_musiclistview);
         mMusicListView.setOnItemClickListener(new MusicItemOnClickListener());//注册click监听器，自定义实现listener
         mp3Infos = MusicListUtil.getMp3Infos(this);//从数据库获取歌曲列表
@@ -52,6 +59,8 @@ public class ListActivity extends AppCompatActivity {
         transaction.add(R.id.fragmentContainer_controlPanel, playerPanelFragment);
         transaction.commit();
 
+
+        //TODO 下载remoteMusic
         btnRemoteTest = (Button) findViewById(R.id.btn_remoteTest);
         btnRemoteTest.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,6 +73,21 @@ public class ListActivity extends AppCompatActivity {
             }
         });
 
+        //TODO 显示loc latlng
+        tv_latitude = (TextView) findViewById(R.id.tv_lat);
+        tv_longitude = (TextView) findViewById(R.id.tv_lng);
+
+
+        //注册lbsReceiver，处理每次返回的lbs信息
+        lbsReceiver = new LBSReceiver();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(AppConstant.ACTION.GET_LOC);
+        this.registerReceiver(lbsReceiver,intentFilter);
+
+        Intent intent = new Intent(AppConstant.ACTION.START_LBS_SERVICE);
+        intent.setPackage("edu.ecustcs123.zhh.walplay");
+        Log.d(AppConstant.LOG.WPLBSDEBUG,"Starting LBSService......");
+        startService(intent);
     }
 
     /** 
@@ -104,4 +128,15 @@ public class ListActivity extends AppCompatActivity {
         );
         mMusicListView.setAdapter(mAdapter);
     };
+
+    public class LBSReceiver extends BroadcastReceiver{
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.d(AppConstant.LOG.WPLBSDEBUG,"Get LBS return!");
+            tv_latitude.setText(String.valueOf(intent.getDoubleExtra("latitude",0.0)));
+            tv_longitude.setText(String.valueOf(intent.getDoubleExtra("longitude",0.0)));
+        }
+    }
+
+
 }
