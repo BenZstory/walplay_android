@@ -42,31 +42,25 @@ public class ListFragment extends Fragment {
     public void onResume() {
         super.onResume();
     }
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                Bundle savedInstanceState){
+        Log.d(AppConstant.LOG.Fragment_onview, "createView");
+        View view = inflater.inflate(R.layout.fragment_list, container, false);
+        initView(view);
+        return view;
+    }
 
-    //Control Panel
-    private Button previousBtn;//上一首
-    private Button nextBtn;//下一首
-    private Button playBtn;//播放暂停
-    private Button btnPlayMode;
-    private ImageButton modeIBtn;//播放方式
-    private TextView titleTxtView;
-    private SeekBar seekBar;
-    //-----ON CREATE-----
-    protected void onCreate(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        View view = inflater.inflate(R.layout.activity_list,container,false);
-        //init();
-        //initWidgetPointer();//FindViewById
-        //setOnClickListener();//添加监听器
+    private void initView(View view){
         mMusicListView = (ListView) view.findViewById(R.id.lv_musiclistview);
         mMusicListView.setOnItemClickListener(new MusicItemOnClickListener());//注册click监听器，自定义实现listener
         mp3Infos = MusicListUtil.getMp3Infos(getActivity());//从数据库获取歌曲列表
         setListAdapter(MusicListUtil.getMusicMaps(mp3Infos));//bind mp3 list
-        android.support.v4.app.FragmentManager fragmentManager = getFragmentManager();
-        android.support.v4.app.FragmentTransaction transaction = fragmentManager.beginTransaction();
-        PlayerPanelFragment playerPanelFragment = new PlayerPanelFragment();
-        transaction.add(R.id.fragmentContainer_controlPanel, playerPanelFragment);
-        transaction.commit();
+    }
+
+    //-----ON CREATE-----
+    protected void onCreate(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
 
     /**
