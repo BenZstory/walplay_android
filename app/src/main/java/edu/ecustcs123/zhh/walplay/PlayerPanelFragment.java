@@ -57,6 +57,7 @@ public class PlayerPanelFragment extends Fragment {
         filter.addAction(AppConstant.ACTION.MUSIC_LISTPOS);
         filter.addAction(AppConstant.ACTION.MUSIC_CURRENT);
         filter.addAction(AppConstant.ACTION.MUSIC_DURATION);
+        filter.addAction(AppConstant.ACTION.MUSIC_CACHE);
         getActivity().registerReceiver(playerReceiver, filter);
         if (getArguments() != null) {
         }
@@ -359,6 +360,13 @@ public class PlayerPanelFragment extends Fragment {
                 //--------------------MUSIC_LISTPOS
                 playingInfo.setListPos(intent.getIntExtra("listPos", -1));
                 UpdatePlayingInfo(1);
+            } else if(action.equals(AppConstant.ACTION.MUSIC_CACHE)){
+                //--------------------MUSIC_CACHE    update secondaryProgress
+                float percent = intent.getFloatExtra("percent",0);
+                Log.d(AppConstant.LOG.WPDEBUG+"___cached", String.valueOf(percent));
+                int t =(int) (percent * (float) seekBar.getMax());
+                Log.d(AppConstant.LOG.WPDEBUG+"___tttt", String.valueOf(t));
+                seekBar.setSecondaryProgress((int) (percent * (float) seekBar.getMax()));
             }
         }
     }

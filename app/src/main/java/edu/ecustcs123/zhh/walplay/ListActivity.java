@@ -32,14 +32,8 @@ public class ListActivity extends AppCompatActivity {
         super.onResume();
     }
 
-    //Control Panel
-    private Button previousBtn;//上一首
-    private Button nextBtn;//下一首
-    private Button playBtn;//播放暂停
-    private Button btnPlayMode;
-    private ImageButton modeIBtn;//播放方式
-    private TextView titleTxtView;
-    private SeekBar seekBar;
+    private Button btnRemoteTest;
+
     //-----ON CREATE-----
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +51,19 @@ public class ListActivity extends AppCompatActivity {
         playerPanelFragment = new PlayerPanelFragment();
         transaction.add(R.id.fragmentContainer_controlPanel, playerPanelFragment);
         transaction.commit();
+
+        btnRemoteTest = (Button) findViewById(R.id.btn_remoteTest);
+        btnRemoteTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AppConstant.ACTION.SPOT_SERVICE);
+                intent.putExtra("spotId",-1);
+                intent.putExtra("downloadUrl",new String("http://222.186.30.212:8082/demo_store/2015/12/13/18130acf26be437ceb9f9e63b5479624.mp3"));
+                intent.setPackage("edu.ecustcs123.zhh.walplay");
+                startService(intent);
+            }
+        });
+
     }
 
     /** 

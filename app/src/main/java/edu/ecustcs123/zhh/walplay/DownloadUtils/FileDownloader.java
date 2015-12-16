@@ -19,6 +19,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import edu.ecustcs123.zhh.walplay.AppConstant;
+
 /**
  * Created by BenZ on 15.12.13.
  * zhengbin0320@gmail.com
@@ -28,6 +30,11 @@ public class FileDownloader {
     private Context context;
     private FileService fileService;
     private DownloadThread[] threads;
+
+    public File getSaveFile() {
+        return saveFile;
+    }
+
     private File saveFile;
     private int downloadSize = 0;
     private boolean exit;       //停止下载
@@ -89,6 +96,7 @@ public class FileDownloader {
                 }
                 String filename = getFileName(http);//获取文件名
                 saveFile = new File(fileSaveDir, filename);
+                Log.d("WP_TEST_saveFilename", String.valueOf(saveFile));
 
                 //获取下载记录
                 Map<Integer, Integer> logdata = fileService.getData(downloadUrl);

@@ -10,14 +10,19 @@ import android.util.Log;
 import android.widget.Toast;
 
 import java.io.File;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import edu.ecustcs123.zhh.walplay.DownloadUtils.DownloadProgressListener;
 import edu.ecustcs123.zhh.walplay.DownloadUtils.FileDownloader;
+import edu.ecustcs123.zhh.walplay.DownloadUtils.SavePathListener;
 
 public class SpotService extends Service {
     private DownloadTask task;
-
-
+    private String savePath;
     public SpotService() {
 
     }
@@ -26,6 +31,7 @@ public class SpotService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         int spotId = intent.getIntExtra("spotId",-2);
         if(spotId == -1){
+            Log.d(AppConstant.LOG.RemoteTest+"id", String.valueOf(spotId));
             //remoteMusic, Download first
             String url = intent.getStringExtra("downloadUrl");
             if (Environment.getExternalStorageState().equals(
@@ -34,17 +40,16 @@ public class SpotService extends Service {
                 // Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES);
                 // 保存路径
                 File savDir = Environment.getExternalStorageDirectory();
-                Log.d("TEST---------", String.valueOf(savDir));
                 download(url,savDir);
-
+                savePath = savDir.getPath()+"/"+getFileName(url);
+                Log.d(AppConstant.LOG.WPTEST+"__savePath", String.valueOf(savePath));
                 Intent intent2 = new Intent();
                 intent2.putExtra("isRemote",true);
                 intent2.putExtra("MSG",AppConstant.PlayerMsg.PLAY_MSG);
-                intent2.putExtra("path",savDir);
+                intent2.putExtra("path",savePath);
                 intent2.setAction(AppConstant.ACTION.MUSIC_SERVICE);
                 intent2.setPackage("edu.ecustcs123.zhh.walplay");
                 startService(intent2);
-
             } else {
                 Toast.makeText(getApplicationContext(),
                         R.string.sdcarderror, Toast.LENGTH_LONG).show();
@@ -61,21 +66,6 @@ public class SpotService extends Service {
         return super.onStartCommand(intent, flags, startId);
     }
 
-    /**
-     * 广播更新播放时间
-     */
-    private Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            if (msg.what == 1) {
-                /*if (mediaPlayer != null) {
-                    playingInfo.setCurrentTime(mediaPlayer.getCurrentPosition());
-                    BroadcastUpdate(AppConstant.UPDATE_TYPE.MUSIC_CURRENT);*//*
-                    handler.sendEmptyMessageDelayed(1, 1000);
-                }*/
-            }
-        }
-    };
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -94,6 +84,7 @@ public class SpotService extends Service {
         private String path;
         private File saveDir;
         private FileDownloader loader;
+        private int fileSize;
 
         public DownloadTask(String path, File saveDir) {
             this.path = path;
@@ -111,11 +102,12 @@ public class SpotService extends Service {
         DownloadProgressListener downloadProgressListener = new DownloadProgressListener() {
             @Override
             public void onDownloadSize(int size) {
-                Log.d(AppConstant.LOG.DownloadTest, String.valueOf(size));
-                Message msg = new Message();
-                msg.what = 1;
-                msg.getData().putInt("size", size);
-                handler.sendMessage(msg);
+                Log.d(AppConstant.LOG.WPDEBUG+"____dSize", String.valueOf(size));
+                Intent intent = new Intent(AppConstant.ACTION.MUSIC_CACHE);
+                float num = (float)size / (float)fileSize;
+//                int percent = (int) (num * 100);
+                intent.putExtra("percent",num);
+                sendBroadcast(intent);
             }
         };
 
@@ -124,13 +116,12 @@ public class SpotService extends Service {
                 // 实例化一个文件下载器
                 loader = new FileDownloader(getApplicationContext(), path,
                         saveDir, 1);
-                // 设置进度条最大值
-                //progressBar.setMax(loader.getFileSize());
+                this.fileSize = loader.getFileSize();
+                savePath = loader.getSaveFile().toString();
                 Log.d(AppConstant.LOG.DownloadTest,"listener done!");
                 loader.download(downloadProgressListener);
             } catch (Exception e) {
                 e.printStackTrace();
-                handler.sendMessage(handler.obtainMessage(-1)); // 发送一条空消息对象
             }
         }
     }
@@ -139,4 +130,14 @@ public class SpotService extends Service {
         task = new DownloadTask(path, savDir);
         new Thread(task).start();
     }
+
+    private String getFileName(String downloadUrl){
+        String fileName = downloadUrl.substring(downloadUrl.lastIndexOf('/')+1);
+        //倘若获取不到文件名
+        if(fileName == null || "".equals(fileName.trim())){
+            fileName = UUID.randomUUID()+".tmp";//默认随机名
+        }
+        return fileName;
+    }
+
 }

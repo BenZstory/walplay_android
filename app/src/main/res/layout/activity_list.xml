@@ -11,7 +11,15 @@
     android:orientation="vertical"
     tools:context="edu.ecustcs123.zhh.walplay.PlayerActivity">
 
+    <Button
+        android:id="@+id/btn_remoteTest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TESTTEST"
+        />
+
         <ListView
+            android:layout_below="@+id/btn_remoteTest"
             android:id="@+id/lv_musiclistview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
