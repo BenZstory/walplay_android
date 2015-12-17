@@ -1,6 +1,7 @@
 package edu.ecustcs123.zhh.walplay;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.support.annotation.DrawableRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -27,6 +28,7 @@ public class MainActivity extends android.support.v7.app.ActionBarActivity imple
     private android.support.v7.app.ActionBar actionBar;
     private PlayerPanelFragment playerPanelFragment;
     private boolean bPlayerPanelFragment =false;
+    private ListFragment.LBSReceiver lbsReceiver ;
 
 
 
@@ -84,6 +86,7 @@ public class MainActivity extends android.support.v7.app.ActionBarActivity imple
         setContentView(R.layout.activity_main);
 
 
+
         //加载各个Fragment
         tabsList.add(new ActionBarTab("列表",ListFragment.class));
         tabsList.add(new ActionBarTab("详情",InfoFragment.class));
@@ -98,6 +101,7 @@ public class MainActivity extends android.support.v7.app.ActionBarActivity imple
         }
 
         initActionBar();
+
 
     }
     private void initActionBar(){
