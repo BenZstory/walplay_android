@@ -14,14 +14,6 @@ import android.widget.SimpleAdapter;
 import java.util.HashMap;
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link ListFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link ListFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class ListFragment extends Fragment {
     //List Panel
     private ListView mMusicListView;//列表view
