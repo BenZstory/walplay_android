@@ -163,8 +163,8 @@ public class ListFragment extends Fragment {
                     vibrator.cancel();
                 }else{
                     //进入景区spotId
-                    long[] pattern = {100,400,400,100};
-                    vibrator.vibrate(pattern, 2);
+                    long[] pattern = {400,400,400,400,400,400};
+                    vibrator.vibrate(pattern, -1);
                     StringBuffer sb = new StringBuffer(256);
                     tv_spotInfo.setText(getString(R.string.inside1)+String.valueOf(spotId)+getString(R.string.inside2));
                     btn_startSpotPlay.setClickable(true);
