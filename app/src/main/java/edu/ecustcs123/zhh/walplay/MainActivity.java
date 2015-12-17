@@ -21,7 +21,6 @@ import javax.security.auth.Destroyable;
 
 public class MainActivity extends android.support.v7.app.ActionBarActivity implements android.support.v7.app.ActionBar.TabListener,ViewPager.OnPageChangeListener{
 
-    public PlayingInfo playingInfo = new PlayingInfo();
     private List<Mp3Info> mp3Infos;
     private List<ActionBarTab> tabsList = new ArrayList<ActionBarTab>(2);
     private ViewPager viewPager;
@@ -34,12 +33,12 @@ public class MainActivity extends android.support.v7.app.ActionBarActivity imple
     @Override
     protected void onPause(){
         super.onPause();
-        if (playingInfo.isPlaying()) {
+        if (playerPanelFragment.playingInfo.isPlaying()) {
             //暂停
             Intent intent=new Intent();
             findViewById(R.id.btn_playerPlayMusic).setBackgroundResource(R.drawable.glyphicons_play);
-            playingInfo.setIsPlaying(false);
-            playingInfo.setIsPause(true);
+            playerPanelFragment.playingInfo.setIsPlaying(false);
+            playerPanelFragment.playingInfo.setIsPause(true);
             intent.putExtra("MSG", AppConstant.PlayerMsg.PAUSE_MSG);
             intent.setAction(AppConstant.ACTION.MUSIC_SERVICE);
             intent.setPackage("edu.ecustcs123.zhh.walplay");
@@ -51,12 +50,12 @@ public class MainActivity extends android.support.v7.app.ActionBarActivity imple
     @Override
     protected void onRestart() {
         super.onRestart();
-        if (playingInfo.isPause()) {
+        if (playerPanelFragment.playingInfo.isPause()) {
             //恢复播放
             Intent intent = new Intent();
             findViewById(R.id.btn_playerPlayMusic).setBackgroundResource(R.drawable.glyphicons_pause);
-            playingInfo.setIsPlaying(true);
-            playingInfo.setIsPause(false);
+            playerPanelFragment. playingInfo.setIsPlaying(true);
+            playerPanelFragment.playingInfo.setIsPause(false);
             intent.putExtra("MSG", AppConstant.PlayerMsg.CONTINUE_MSG);
             intent.setAction(AppConstant.ACTION.MUSIC_SERVICE);
             intent.setPackage("edu.ecustcs123.zhh.walplay");
@@ -64,13 +63,13 @@ public class MainActivity extends android.support.v7.app.ActionBarActivity imple
 
         } else {
             //首次播放
-            playingInfo.setIsPlaying(true);
-            playingInfo.setIsPause(false);
+            playerPanelFragment.playingInfo.setIsPlaying(true);
+            playerPanelFragment.playingInfo.setIsPause(false);
             mp3Infos=MusicListUtil.getMp3Infos(this);
             if (mp3Infos.size() < 1) {
                 //没有可播放的
-                playingInfo.setIsPlaying(false);
-                playingInfo.setIsPause(false);
+                playerPanelFragment. playingInfo.setIsPlaying(false);
+                playerPanelFragment.playingInfo.setIsPause(false);
                 Toast.makeText(this, "当前列表没有音乐可播放", Toast.LENGTH_SHORT).show();
                 return;
             }

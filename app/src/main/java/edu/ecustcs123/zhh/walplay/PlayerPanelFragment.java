@@ -21,7 +21,7 @@ import android.widget.Toast;
 import java.util.List;
 
 public class PlayerPanelFragment extends android.support.v4.app.Fragment {
-    private PlayingInfo playingInfo = new PlayingInfo();
+    public PlayingInfo playingInfo = new PlayingInfo();
     private SeekBar seekBar;
     private TextView tv_Title;
     private OnFragmentInteractionListener mListener;
