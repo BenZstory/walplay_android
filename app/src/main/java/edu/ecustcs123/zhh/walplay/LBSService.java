@@ -13,6 +13,7 @@ import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.SDKInitializer;
+import com.baidu.mapapi.map.BaiduMap;
 
 
 public class LBSService extends Service {
@@ -89,8 +90,8 @@ public class LBSService extends Service {
      * -1代表不再景点spot中
      */
     public int getLocArea(){
-        return -
-                1;
+        double distance = BaiduMa
+        return -1;
     }
 
     private void initOption(int span){
