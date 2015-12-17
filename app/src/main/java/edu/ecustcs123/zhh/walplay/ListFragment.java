@@ -1,6 +1,9 @@
 package edu.ecustcs123.zhh.walplay;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -9,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -22,13 +26,16 @@ public class ListFragment extends Fragment {
     private List<Mp3Info> mp3Infos;//保存mp3info的列表
     private SimpleAdapter mAdapter;//列表adapter
     private PlayerPanelFragment playerPanelFragment;
+    private LBSReceiver lbsReceiver;
 
     //LBS test
     private TextView tv_latitude;
     private TextView tv_longitude;
     private TextView tv_errCode;
-
-
+    private TextView tv_spotInfo;
+    private Button btn_startSpotPlay;
+    private Button btn_startLoc;
+    
     @Override
     public void onResume() {
         super.onResume();
@@ -51,6 +58,30 @@ public class ListFragment extends Fragment {
         tv_latitude = (TextView) view.findViewById(R.id.tv_lat);
         tv_longitude = (TextView) view.findViewById(R.id.tv_lng);
         tv_errCode = (TextView) view.findViewById(R.id.tv_errCode);
+        tv_spotInfo = (TextView) view.findViewById(R.id.tv_spotInfo);
+        btn_startSpotPlay = (Button) view.findViewById(R.id.btn_startSpotPlay);
+        btn_startLoc = (Button) view.findViewById(R.id.btn_startLoc);
+
+        btn_startLoc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent startLoc = new Intent(AppConstant.ACTION.START_LBS_SERVICE);
+                startLoc.setPackage("edu.ecustcs123.zhh.walplay");
+                getActivity().startService(startLoc);
+            }
+        });
+
+        //注册lbsReceiver，处理每次返回的lbs信息
+        lbsReceiver = new LBSReceiver();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(AppConstant.ACTION.GET_LOC);
+        intentFilter.addAction(AppConstant.ACTION.NOTIFY_SPOT);
+        getActivity().registerReceiver(lbsReceiver,intentFilter);
+
+        Intent intent = new Intent(AppConstant.ACTION.START_LBS_SERVICE);
+        intent.setPackage("edu.ecustcs123.zhh.walplay");
+        Log.d(AppConstant.LOG.WPLBSDEBUG,"Starting LBSService......");
+        getActivity().startService(intent);
     }
 
     //-----ON CREATE-----
@@ -87,6 +118,25 @@ public class ListFragment extends Fragment {
                 new int[] {R.id.tv_itemMusicName,R.id.tv_itemMusicInfo,R.id.tv_itemMusicDuration}
         );
         mMusicListView.setAdapter(mAdapter);
+    }
+
+    public class LBSReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if(action.equals(AppConstant.ACTION.GET_LOC)){
+                Log.d(AppConstant.LOG.WPLBSDEBUG,"Get LBS return!");
+                tv_latitude.setText(String.valueOf(intent.getDoubleExtra("latitude",0.0)));
+                tv_longitude.setText(String.valueOf(intent.getDoubleExtra("longitude",0.0)));
+                tv_errCode.setText(String.valueOf(intent.getIntExtra("locTyep",-1)));
+            }else if(action.equals(AppConstant.ACTION.NOTIFY_SPOT)){
+                int spotId = intent.getIntExtra("locArea",-1);
+                Log.d(AppConstant.LOG.WPLBSDEBUG+"_receiveSpot", String.valueOf(spotId));
+                StringBuffer sb = new StringBuffer(256);
+                tv_spotInfo.setText(getString(R.string.inside1)+String.valueOf(spotId)+getString(R.string.inside2));
+                btn_startSpotPlay.setClickable(true);
+            }
+        }
     }
 }
 
