@@ -71,6 +71,21 @@ public class ListFragment extends Fragment {
             }
         });
 
+        //默认spotPlay不可点击
+        btn_startSpotPlay.setClickable(false);
+        //TODO 测试接受推送，直接online播放mp3
+        btn_startSpotPlay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AppConstant.ACTION.SPOT_SERVICE);
+                intent.putExtra("spotId",-1);
+                intent.putExtra("downloadUrl",new String("http://222.186.30.212:8082/demo_store/2015/12/13/18130acf26be437ceb9f9e63b5479624.mp3"));
+                intent.setPackage("edu.ecustcs123.zhh.walplay");
+                Log.d(AppConstant.LOG.WPSPOT,"start new spot service");
+                getActivity().startService(intent);
+            }
+        });
+
         //注册lbsReceiver，处理每次返回的lbs信息
         lbsReceiver = new LBSReceiver();
         IntentFilter intentFilter = new IntentFilter();

@@ -89,7 +89,8 @@ public class LBSService extends Service {
      * -1代表不再景点spot中
      */
     public int getLocArea(){
-        return 1;
+        return -
+                1;
     }
 
     private void initOption(int span){

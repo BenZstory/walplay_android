@@ -49,7 +49,7 @@ android:layout_width="match_parent" android:layout_height="match_parent"
                 android:layout_height="wrap_content" />
             <Button
                 android:id="@+id/btn_startLoc"
-                android:text="TEST"
+                android:text="LOC"
                 android:layout_weight="1"
                 android:clickable="true"
                 android:layout_width="wrap_content"
