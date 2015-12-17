@@ -14,11 +14,13 @@
     <string name="player_playMode_4">列表循环</string>
     <string name="player_playMode_5">随机播放</string>
 
-    <!--SpotDetail-->
+    <!--InfoFragment-->
     <string name="Current_Spot_Name_For_Test">Current_Spot_Name_For_Test</string>
     <string name="Current_Spot_Location_For_Test">Current_Spot_Location_For_Test</string>
     <string name="Current_Spot_More_Info_For_Test">Current_Spot_More_Info_For_Test</string>
     <string name="Current_Spot_Lever_For_Test">AAA</string>
+    <string name="Use_Camera">拍照</string>
+    <string name="pic_folder_name">walplay_pic</string>
 
 
     <!-- testtesttest-->

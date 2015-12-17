@@ -94,7 +94,7 @@ public class ListFragment extends Fragment {
         });
 
         //注册lbsReceiver，处理每次返回的lbs信息
-        lbsReceiver = new LBSReceiver();
+        lbsReceiver = new ListFragment.LBSReceiver();
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(AppConstant.ACTION.GET_LOC);
         intentFilter.addAction(AppConstant.ACTION.NOTIFY_SPOT);
@@ -109,6 +109,12 @@ public class ListFragment extends Fragment {
     //-----ON CREATE-----
     protected void onCreate(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        getActivity().unregisterReceiver(lbsReceiver);
     }
 
     /**

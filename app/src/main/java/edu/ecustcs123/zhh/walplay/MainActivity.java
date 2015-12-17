@@ -1,6 +1,7 @@
 package edu.ecustcs123.zhh.walplay;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.support.annotation.DrawableRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -12,6 +13,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -27,6 +29,7 @@ public class MainActivity extends android.support.v7.app.ActionBarActivity imple
     private android.support.v7.app.ActionBar actionBar;
     private PlayerPanelFragment playerPanelFragment;
     private boolean bPlayerPanelFragment =false;
+    private ListFragment.LBSReceiver lbsReceiver ;
 
 
 
@@ -84,6 +87,7 @@ public class MainActivity extends android.support.v7.app.ActionBarActivity imple
         setContentView(R.layout.activity_main);
 
 
+
         //加载各个Fragment
         tabsList.add(new ActionBarTab("列表",ListFragment.class));
         tabsList.add(new ActionBarTab("详情",InfoFragment.class));
@@ -98,6 +102,7 @@ public class MainActivity extends android.support.v7.app.ActionBarActivity imple
         }
 
         initActionBar();
+
 
     }
     private void initActionBar(){
@@ -121,7 +126,11 @@ public class MainActivity extends android.support.v7.app.ActionBarActivity imple
         viewPager.setOnPageChangeListener(this);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
+    }
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
