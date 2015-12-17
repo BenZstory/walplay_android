@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +19,6 @@ import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.zip.Inflater;
@@ -78,12 +78,10 @@ public class ListFragment extends Fragment {
             intent.setPackage("edu.ecustcs123.zhh.walplay");
             getActivity().startService(intent);
 
+            //跳转详情界面
+            ((ViewPager)getActivity().findViewById(R.id.MainViewPager)).setCurrentItem(1);
 
-            final Intent intent2 = new Intent();
-            intent2.setClass(getActivity(), PlayerService.class);
-            intent2.putExtra("listPos", position);
-//            Log.d("startPlaying-->", String.valueOf(position));
-            getFragmentManager().beginTransaction().replace(R.id.List_Fragment,new InfoFragment()).addToBackStack(null).commit();
+            /*getFragmentManager().beginTransaction().replace(R.id.List_Fragment,new InfoFragment()).addToBackStack(null).commit();*/
         }
     }
 
