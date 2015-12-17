@@ -55,7 +55,6 @@
         <service android:name="com.baidu.location.f" android:enabled="true" android:process=":remote">
         </service>
 
-
         <!--Other Services-->
         <service android:name=".PlayerService">
             <intent-filter>
