@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -20,6 +22,12 @@ public class ListFragment extends Fragment {
     private List<Mp3Info> mp3Infos;//保存mp3info的列表
     private SimpleAdapter mAdapter;//列表adapter
     private PlayerPanelFragment playerPanelFragment;
+
+    //LBS test
+    private TextView tv_latitude;
+    private TextView tv_longitude;
+    private TextView tv_errCode;
+
 
     @Override
     public void onResume() {
@@ -39,6 +47,10 @@ public class ListFragment extends Fragment {
         mMusicListView.setOnItemClickListener(new MusicItemOnClickListener());//注册click监听器，自定义实现listener
         mp3Infos = MusicListUtil.getMp3Infos(getActivity());//从数据库获取歌曲列表
         setListAdapter(MusicListUtil.getMusicMaps(mp3Infos));//bind mp3 list
+
+        tv_latitude = (TextView) view.findViewById(R.id.tv_lat);
+        tv_longitude = (TextView) view.findViewById(R.id.tv_lng);
+        tv_errCode = (TextView) view.findViewById(R.id.tv_errCode);
     }
 
     //-----ON CREATE-----

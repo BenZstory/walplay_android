@@ -3,28 +3,18 @@ package edu.ecustcs123.zhh.walplay;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Environment;
-import android.os.Handler;
 import android.os.IBinder;
-import android.os.Message;
 import android.util.Log;
 import android.widget.Toast;
-
 import java.io.File;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.UUID;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import edu.ecustcs123.zhh.walplay.DownloadUtils.DownloadProgressListener;
 import edu.ecustcs123.zhh.walplay.DownloadUtils.FileDownloader;
-import edu.ecustcs123.zhh.walplay.DownloadUtils.SavePathListener;
 
 public class SpotService extends Service {
     private DownloadTask task;
     private String savePath;
     public SpotService() {
-
     }
 
     @Override
@@ -66,14 +56,11 @@ public class SpotService extends Service {
         return super.onStartCommand(intent, flags, startId);
     }
 
-
     @Override
     public IBinder onBind(Intent intent) {
         // TODO: Return the communication channel to the service.
         throw new UnsupportedOperationException("Not yet implemented");
     }
-
-
 
     private void exit() {
         if (task != null)

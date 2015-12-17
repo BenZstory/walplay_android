@@ -2,9 +2,6 @@ package edu.ecustcs123.zhh.walplay.DownloadUtils;
 
 import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
-
-import java.io.CharConversionException;
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -18,8 +15,6 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import edu.ecustcs123.zhh.walplay.AppConstant;
 
 /**
  * Created by BenZ on 15.12.13.
