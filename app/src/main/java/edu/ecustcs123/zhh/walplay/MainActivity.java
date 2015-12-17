@@ -1,5 +1,7 @@
 package edu.ecustcs123.zhh.walplay;
 
+import android.content.Intent;
+import android.support.annotation.DrawableRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -8,17 +10,72 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
+import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.security.auth.Destroyable;
+
 public class MainActivity extends android.support.v7.app.ActionBarActivity implements android.support.v7.app.ActionBar.TabListener,ViewPager.OnPageChangeListener{
 
+    private List<Mp3Info> mp3Infos;
     private List<ActionBarTab> tabsList = new ArrayList<ActionBarTab>(2);
     private ViewPager viewPager;
     private android.support.v7.app.ActionBar actionBar;
     private PlayerPanelFragment playerPanelFragment;
+    private boolean bPlayerPanelFragment =false;
+
+
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        if (playerPanelFragment.playingInfo.isPlaying()) {
+            //暂停
+            Intent intent=new Intent();
+            findViewById(R.id.btn_playerPlayMusic).setBackgroundResource(R.drawable.glyphicons_play);
+            playerPanelFragment.playingInfo.setIsPlaying(false);
+            playerPanelFragment.playingInfo.setIsPause(true);
+            intent.putExtra("MSG", AppConstant.PlayerMsg.PAUSE_MSG);
+            intent.setAction(AppConstant.ACTION.MUSIC_SERVICE);
+            intent.setPackage("edu.ecustcs123.zhh.walplay");
+            startService(intent);
+        }
+
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        if (playerPanelFragment.playingInfo.isPause()) {
+            //恢复播放
+            Intent intent = new Intent();
+            findViewById(R.id.btn_playerPlayMusic).setBackgroundResource(R.drawable.glyphicons_pause);
+            playerPanelFragment. playingInfo.setIsPlaying(true);
+            playerPanelFragment.playingInfo.setIsPause(false);
+            intent.putExtra("MSG", AppConstant.PlayerMsg.CONTINUE_MSG);
+            intent.setAction(AppConstant.ACTION.MUSIC_SERVICE);
+            intent.setPackage("edu.ecustcs123.zhh.walplay");
+            startService(intent);
+
+        } else {
+            //首次播放
+            playerPanelFragment.playingInfo.setIsPlaying(true);
+            playerPanelFragment.playingInfo.setIsPause(false);
+            mp3Infos=MusicListUtil.getMp3Infos(this);
+            if (mp3Infos.size() < 1) {
+                //没有可播放的
+                playerPanelFragment. playingInfo.setIsPlaying(false);
+                playerPanelFragment.playingInfo.setIsPause(false);
+                Toast.makeText(this, "当前列表没有音乐可播放", Toast.LENGTH_SHORT).show();
+                return;
+            }
+        }
+    }
+
 
 
     @Override
@@ -26,15 +83,20 @@ public class MainActivity extends android.support.v7.app.ActionBarActivity imple
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         //加载各个Fragment
         tabsList.add(new ActionBarTab("列表",ListFragment.class));
         tabsList.add(new ActionBarTab("详情",InfoFragment.class));
 
         FragmentManager fragmentManager=getSupportFragmentManager();
         android.support.v4.app.FragmentTransaction transaction = fragmentManager.beginTransaction();
-        playerPanelFragment = new PlayerPanelFragment();
-        transaction.add(R.id.fragmentContainer_controlPanel,playerPanelFragment);
-        transaction.commit();
+        if(!bPlayerPanelFragment){
+            playerPanelFragment = new PlayerPanelFragment();
+            transaction.add(R.id.fragmentContainer_controlPanel,playerPanelFragment);
+            transaction.commit();
+            bPlayerPanelFragment = true;
+        }
+
         initActionBar();
 
     }
@@ -148,6 +210,7 @@ public class MainActivity extends android.support.v7.app.ActionBarActivity imple
             return null;
 
         }
+
 
 
         @Override

@@ -4,7 +4,10 @@
     android:layout_height="match_parent"
     tools:context="edu.ecustcs123.zhh.walplay.InfoFragment"
     android:id="@+id/Info_Fragment">
-
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -19,8 +22,6 @@
 
             <TextView
                 android:singleLine="true"
-                android:ellipsize="marquee"
-                android:marqueeRepeatLimit="marquee_forever"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/Current_Spot_Name_For_Test"
@@ -53,7 +54,7 @@
 
     <TabHost
         android:background="#BFBFBF"
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/tabHost"
         android:layout_weight="1">
@@ -82,5 +83,5 @@
             </FrameLayout>
         </LinearLayout>
     </TabHost>
-
+</LinearLayout>
 </FrameLayout>

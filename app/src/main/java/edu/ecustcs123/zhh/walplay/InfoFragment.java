@@ -3,12 +3,9 @@ package edu.ecustcs123.zhh.walplay;
 import android.app.LocalActivityManager;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -54,7 +51,12 @@ public class InfoFragment extends Fragment {
         Log.d(AppConstant.LOG.Fragment_onview, "createView");
         view = inflater.inflate(R.layout.fragment_info, container, false);
         initView(view);
-        Intent intent = getActivity().getIntent();
+
+        TextView textView = (TextView) view.findViewById(R.id.CurrentSpotDetailName);
+        textView.setText(CurrentInfo.CurrentName);
+
+        textView=(TextView) view.findViewById(R.id.CurrentSpotDetailLocation);
+        textView.setText(CurrentInfo.CurrentArtist);
 
 
         //定义一个放view的list，用于存放ViewPager用到的View
@@ -63,11 +65,11 @@ public class InfoFragment extends Fragment {
         manager = new LocalActivityManager(getActivity(), true);
         manager.dispatchCreate(savedInstanceState);
 
-        Intent t1 = new Intent(context, T1Activity.class);
+        Intent t1 = new Intent(context, TabSpotPicActivity.class);
         listviews.add(getView("tab_1", t1));
-        Intent t2 = new Intent(context, T2Activity.class);
+        Intent t2 = new Intent(context, TabSpotCommentActivity.class);
         listviews.add(getView("tab_2", t2));
-        Intent t3 = new Intent(context, T3Activity.class);
+        Intent t3 = new Intent(context, TabSpotMoreInfoActivity.class);
         listviews.add(getView("tab_3", t3));
 
         mTabHost = (TabHost) view.findViewById(R.id.tabHost);
@@ -87,14 +89,11 @@ public class InfoFragment extends Fragment {
         TextView tvTab3 = (TextView) tabIndicator3.findViewById(R.id.tab_title);
         tvTab3.setText("更多");
 
-        intent = new Intent(context, EmptyActivity.class);
-        //注意这儿Intent中的activity不能是自身 比如“tab_1”对应的是T1Activity，后面intent就new的T3Activity的。
-        mTabHost.addTab(mTabHost.newTabSpec("tab_1").setIndicator(tabIndicator1).setContent(intent));
-        mTabHost.addTab(mTabHost.newTabSpec("tab_2").setIndicator(tabIndicator2).setContent(intent));
-        mTabHost.addTab(mTabHost.newTabSpec("tab_3").setIndicator(tabIndicator3).setContent(intent));
+        mTabHost.addTab(mTabHost.newTabSpec("tab_1").setIndicator(tabIndicator1).setContent(new Intent(context,TabSpotPicActivity.class)));
+        mTabHost.addTab(mTabHost.newTabSpec("tab_2").setIndicator(tabIndicator2).setContent(new Intent(context,TabSpotCommentActivity.class)));
+        mTabHost.addTab(mTabHost.newTabSpec("tab_3").setIndicator(tabIndicator3).setContent(new Intent(context,TabSpotMoreInfoActivity.class)));
 
-
-        pager.setAdapter(new MyPageAdapter(listviews));
+        pager.setAdapter(new mPageAdapter(listviews));
         pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
@@ -140,6 +139,8 @@ public class InfoFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
+
     }
 
 
@@ -158,11 +159,11 @@ public class InfoFragment extends Fragment {
         super.onDetach();
     }
 
-    private class MyPageAdapter extends PagerAdapter {
+    private class mPageAdapter extends PagerAdapter {
 
         private List<View> list;
 
-        private MyPageAdapter(List<View> list) {
+        private mPageAdapter(List<View> list) {
             this.list = list;
         }
 
@@ -187,6 +188,7 @@ public class InfoFragment extends Fragment {
             pViewPager.addView(list.get(position));
             return list.get(position);
         }
+
 
         @Override
         public boolean isViewFromObject(View arg0, Object arg1) {

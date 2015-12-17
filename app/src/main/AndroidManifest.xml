@@ -37,12 +37,9 @@
         </activity>
 
         <activity android:name=".MapActivity" />
-        <activity android:name=".T1Activity" />
-        <activity android:name=".T2Activity" />
-        <activity android:name=".T3Activity" />
-        <activity android:name=".EmptyActivity" />
-
-
+        <activity android:name=".TabSpotPicActivity" />
+        <activity android:name=".TabSpotCommentActivity" />
+        <activity android:name=".TabSpotMoreInfoActivity" />
         <!--BaiduMapService-->
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
