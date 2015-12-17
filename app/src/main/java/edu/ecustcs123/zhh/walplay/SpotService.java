@@ -26,8 +26,6 @@ public class SpotService extends Service {
             String url = intent.getStringExtra("downloadUrl");
             if (Environment.getExternalStorageState().equals(
                     Environment.MEDIA_MOUNTED)) {
-                // File savDir =
-                // Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES);
                 // 保存路径
                 File savDir = Environment.getExternalStorageDirectory();
                 download(url,savDir);

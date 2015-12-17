@@ -374,6 +374,10 @@ public class PlayerPanelFragment extends android.support.v4.app.Fragment {
                 int t =(int) (percent * (float) seekBar.getMax());
                 Log.d(AppConstant.LOG.WPDEBUG+"___tttt", String.valueOf(t));
                 seekBar.setSecondaryProgress((int) (percent * (float) seekBar.getMax()));
+            } else if(action.equals(AppConstant.ACTION.MUSIC_TITLE)){
+                String title = intent.getStringExtra("title");
+                tv_Title.setText(title);
+                playingInfo.setMusicTitle(title);
             }
         }
     }
