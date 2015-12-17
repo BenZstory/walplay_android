@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -35,6 +36,8 @@ public class ListFragment extends Fragment {
     private TextView tv_spotInfo;
     private Button btn_startSpotPlay;
     private Button btn_startLoc;
+
+    private Vibrator vibrator;
     
     @Override
     public void onResume() {
@@ -46,6 +49,7 @@ public class ListFragment extends Fragment {
         Log.d(AppConstant.LOG.Fragment_onview, "createView");
         View view = inflater.inflate(R.layout.fragment_list, container, false);
         initView(view);
+        vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
         return view;
     }
 
@@ -65,9 +69,12 @@ public class ListFragment extends Fragment {
         btn_startLoc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent startLoc = new Intent(AppConstant.ACTION.START_LBS_SERVICE);
-                startLoc.setPackage("edu.ecustcs123.zhh.walplay");
-                getActivity().startService(startLoc);
+                Intent changeSpot = new Intent(AppConstant.ACTION.CHANGE_SPOT_STATUS);
+                getActivity().sendBroadcast(changeSpot);
+
+//                Intent startLoc = new Intent(AppConstant.ACTION.START_LBS_SERVICE);
+//                startLoc.setPackage("edu.ecustcs123.zhh.walplay");
+//                getActivity().startService(startLoc);
             }
         });
 
@@ -149,9 +156,19 @@ public class ListFragment extends Fragment {
             }else if(action.equals(AppConstant.ACTION.NOTIFY_SPOT)){
                 int spotId = intent.getIntExtra("locArea",-1);
                 Log.d(AppConstant.LOG.WPLBSDEBUG+"_receiveSpot", String.valueOf(spotId));
-                StringBuffer sb = new StringBuffer(256);
-                tv_spotInfo.setText(getString(R.string.inside1)+String.valueOf(spotId)+getString(R.string.inside2));
-                btn_startSpotPlay.setClickable(true);
+                if(spotId == -1){
+                    //走出景区
+                    tv_spotInfo.setText(getString(R.string.outside));
+                    btn_startSpotPlay.setClickable(false);
+                    vibrator.cancel();
+                }else{
+                    //进入景区spotId
+                    long[] pattern = {100,400,400,100};
+                    vibrator.vibrate(pattern, 2);
+                    StringBuffer sb = new StringBuffer(256);
+                    tv_spotInfo.setText(getString(R.string.inside1)+String.valueOf(spotId)+getString(R.string.inside2));
+                    btn_startSpotPlay.setClickable(true);
+                }
             }
         }
     }
