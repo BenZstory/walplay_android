@@ -58,8 +58,7 @@ public class PlayerPanelFragment extends android.support.v4.app.Fragment {
         filter.addAction(AppConstant.ACTION.MUSIC_CURRENT);
         filter.addAction(AppConstant.ACTION.MUSIC_DURATION);
         getActivity().registerReceiver(playerReceiver, filter);
-        if (getArguments() != null) {
-        }
+
 
     }
 

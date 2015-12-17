@@ -1,8 +1,10 @@
 package edu.ecustcs123.zhh.walplay;
 
 import android.app.LocalActivityManager;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -55,6 +57,12 @@ public class InfoFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_info, container, false);
         initView(view);
         Intent intent = getActivity().getIntent();
+
+        TextView textView = (TextView) view.findViewById(R.id.CurrentSpotDetailName);
+        textView.setText(CurrentInfo.CurrentName);
+
+        textView=(TextView) view.findViewById(R.id.CurrentSpotDetailLocation);
+        textView.setText(CurrentInfo.CurrentArtist);
 
 
         //定义一个放view的list，用于存放ViewPager用到的View
@@ -140,6 +148,8 @@ public class InfoFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
+
     }
 
 
@@ -187,6 +197,7 @@ public class InfoFragment extends Fragment {
             pViewPager.addView(list.get(position));
             return list.get(position);
         }
+
 
         @Override
         public boolean isViewFromObject(View arg0, Object arg1) {
