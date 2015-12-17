@@ -64,7 +64,7 @@
 
         <ListView
             android:layout_below="@+id/spotNotifyLayout"
-            android:id="@+id/lv_musiclistview"
+            android:id="@+id/lv_musiclistview_del_for_test"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@+id/fragmentContainer_controlPanel">

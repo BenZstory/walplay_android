@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +20,7 @@ import android.widget.Toast;
 
 import java.util.List;
 
-public class PlayerPanelFragment extends Fragment {
+public class PlayerPanelFragment extends android.support.v4.app.Fragment {
     private PlayingInfo playingInfo = new PlayingInfo();
     private SeekBar seekBar;
     private TextView tv_Title;
@@ -34,7 +35,6 @@ public class PlayerPanelFragment extends Fragment {
     public PlayerPanelFragment() {
         // Required empty public constructor
     }
-
 
     public static PlayerPanelFragment newInstance() {
         Log.d(AppConstant.LOG.Com_Frag_Aty + "_TEST", "What happened here?");
@@ -61,6 +61,7 @@ public class PlayerPanelFragment extends Fragment {
         getActivity().registerReceiver(playerReceiver, filter);
         if (getArguments() != null) {
         }
+
     }
 
     @Override
@@ -82,6 +83,7 @@ public class PlayerPanelFragment extends Fragment {
         playBtn = (ImageButton) view.findViewById(R.id.btn_playerPlayMusic);
         btnPlayMode = (ImageButton) view.findViewById(R.id.btn_playerPlayMode);
         mp3Infos = MusicListUtil.getMp3Infos(getActivity());
+
     }
 
     @Override
@@ -123,6 +125,8 @@ public class PlayerPanelFragment extends Fragment {
         playBtn.setOnClickListener(viewOnClickListener);
         btnPlayMode.setOnClickListener(viewOnClickListener);
         seekBar.setOnSeekBarChangeListener(new SeekBarChangeListener());
+
+        tv_Title.setOnClickListener(viewOnClickListener);
     }
 
     /**
@@ -134,6 +138,10 @@ public class PlayerPanelFragment extends Fragment {
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
+                case R.id.tv_titlePlayingMusic:
+                    //跳转详情界面
+                    ((ViewPager)getActivity().findViewById(R.id.MainViewPager)).setCurrentItem(1);
+                    break;
                 case R.id.btn_playerPlayMode:
                     //更改播放模式
                     playingInfo.setPlayMode((playingInfo.getPlayMode() + 1) % 3);
@@ -303,12 +311,12 @@ public class PlayerPanelFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
+       /* if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
-        }
+        }*/
     }
 
     @Override
