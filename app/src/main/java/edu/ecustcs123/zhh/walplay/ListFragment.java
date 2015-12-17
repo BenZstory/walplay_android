@@ -1,12 +1,13 @@
 package edu.ecustcs123.zhh.walplay;
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +19,6 @@ import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.zip.Inflater;
@@ -77,11 +77,11 @@ public class ListFragment extends Fragment {
             intent.setAction(AppConstant.ACTION.MUSIC_SERVICE);
             intent.setPackage("edu.ecustcs123.zhh.walplay");
             getActivity().startService(intent);
-            final Intent intent2 = new Intent();
-            intent2.setClass(getActivity(), SpotDetailActivity.class);
-            intent2.putExtra("listPos", position);
-            startActivity(intent2);
-//            Log.d("startPlaying-->", String.valueOf(position));
+
+            //跳转详情界面
+            ((ViewPager)getActivity().findViewById(R.id.MainViewPager)).setCurrentItem(1);
+
+            /*getFragmentManager().beginTransaction().replace(R.id.List_Fragment,new InfoFragment()).addToBackStack(null).commit();*/
         }
     }
 

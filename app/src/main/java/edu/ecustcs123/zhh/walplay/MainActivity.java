@@ -28,7 +28,7 @@ public class MainActivity extends android.support.v7.app.ActionBarActivity imple
 
         //加载各个Fragment
         tabsList.add(new ActionBarTab("列表",ListFragment.class));
-        tabsList.add(new ActionBarTab("详情",ListFragment.class));
+        tabsList.add(new ActionBarTab("详情",InfoFragment.class));
 
         FragmentManager fragmentManager=getSupportFragmentManager();
         android.support.v4.app.FragmentTransaction transaction = fragmentManager.beginTransaction();
@@ -43,6 +43,9 @@ public class MainActivity extends android.support.v7.app.ActionBarActivity imple
         viewPager = (ViewPager) this.findViewById(R.id.MainViewPager);
         actionBar = getSupportActionBar();
         actionBar.setNavigationMode(android.support.v7.app.ActionBar.NAVIGATION_MODE_TABS);
+        //去除默认ActionBar
+        actionBar.setDisplayShowHomeEnabled(false);
+        actionBar.setDisplayShowTitleEnabled(false);
 
 
         //循环遍历 初始化Actionbar中的Tab

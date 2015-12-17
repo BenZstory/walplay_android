@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -138,9 +139,7 @@ public class PlayerPanelFragment extends android.support.v4.app.Fragment {
             switch (v.getId()) {
                 case R.id.tv_titlePlayingMusic:
                     //跳转详情界面
-                    intent.setClass(getActivity(),SpotDetailActivity.class);
-                    intent.putExtra("listPos", playingInfo.getListPos());
-                    startActivity(intent);
+                    ((ViewPager)getActivity().findViewById(R.id.MainViewPager)).setCurrentItem(1);
                     break;
                 case R.id.btn_playerPlayMode:
                     //更改播放模式

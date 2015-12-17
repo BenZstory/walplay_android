@@ -48,30 +48,14 @@ public class InfoFragment extends Fragment {
 
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        Log.d(AppConstant.LOG.Fragment_onview, "createView");
+        view = inflater.inflate(R.layout.fragment_info, container, false);
+        initView(view);
         Intent intent = getActivity().getIntent();
-        int tmp = intent.getIntExtra("listPos", -1);
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        PlayerPanelFragment playerPanelFragment = new PlayerPanelFragment();
 
-        if (tmp != -1) {
-            //通过点击item进入detail,需要重置listPos
-            Log.d(AppConstant.LOG.NewSpotPlaying + "_ATY", String.valueOf(tmp));
-            Bundle bundle = new Bundle();
-            bundle.putInt(AppConstant.KEY.NEW_PLAYING, tmp);
-            playerPanelFragment.setArguments(bundle);
-        } else {
-            Bundle bundle = intent.getBundleExtra(AppConstant.KEY.PARCELABLE_PLAYINGINFO);
-            Log.d(AppConstant.LOG.Com_Frag_Aty + "INTENT", String.valueOf(intent));
-            playerPanelFragment.setArguments(bundle);           //获得playingInfo
-            Log.d(AppConstant.LOG.Com_Frag_Aty + "_SAVING", String.valueOf(bundle));
-            Log.d(AppConstant.LOG.Com_Frag_Aty, "putBundle_spotAty");
-        }
-
-        transaction.add(R.id.fragmentContainer_controlPanel, playerPanelFragment);
-        transaction.commit();
 
         //定义一个放view的list，用于存放ViewPager用到的View
         listviews = new ArrayList<View>();
@@ -143,15 +127,6 @@ public class InfoFragment extends Fragment {
                 }
             }
         });
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        Log.d(AppConstant.LOG.Fragment_onview, "createView");
-        view = inflater.inflate(R.layout.fragment_info, container, false);
-        initView(view);
         return view;
     }
 
@@ -161,6 +136,13 @@ public class InfoFragment extends Fragment {
 
 
     }
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+    }
+
+
 
     private View getView(String id, Intent intent) {
         return manager.startActivity(id, intent).getDecorView();
