@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/GitCode.iml" filepath="$PROJECT_DIR$/GitCode.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/walplay.iml" filepath="$PROJECT_DIR$/walplay.iml" />
     </modules>
   </component>
 </project>
