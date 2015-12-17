@@ -39,13 +39,14 @@ public class ListActivity extends AppCompatActivity {
     private TextView tv_spotInfo;
     private Button btn_startSpotPlay;
     private Button btn_startLoc;
+    private TextView tv_errCode;
 
     @Override
     protected void onResume() {
         super.onResume();
     }
 
-    private Button btnRemoteTest;
+//    private Button btnRemoteTest;
 
     //-----ON CREATE-----
     @Override
@@ -82,6 +83,7 @@ public class ListActivity extends AppCompatActivity {
         tv_spotInfo = (TextView) findViewById(R.id.tv_spotInfo);
         btn_startSpotPlay = (Button) findViewById(R.id.btn_startSpotPlay);
         btn_startLoc = (Button) findViewById(R.id.btn_startLoc);
+        tv_errCode = (TextView) findViewById(R.id.tv_errCode);
 
         btn_startLoc.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -153,6 +155,7 @@ public class ListActivity extends AppCompatActivity {
                 Log.d(AppConstant.LOG.WPLBSDEBUG,"Get LBS return!");
                 tv_latitude.setText(String.valueOf(intent.getDoubleExtra("latitude",0.0)));
                 tv_longitude.setText(String.valueOf(intent.getDoubleExtra("longitude",0.0)));
+                tv_errCode.setText(String.valueOf(intent.getIntExtra("locTyep",-1)));
             }else if(action.equals(AppConstant.ACTION.NOTIFY_SPOT)){
                 int spotId = intent.getIntExtra("locArea",-1);
                 Log.d(AppConstant.LOG.WPLBSDEBUG+"_receiveSpot", String.valueOf(spotId));

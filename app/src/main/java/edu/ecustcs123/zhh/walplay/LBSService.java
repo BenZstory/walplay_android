@@ -42,7 +42,6 @@ public class LBSService extends Service {
         }
     };*/
 
-
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d(AppConstant.LOG.WPLBSDEBUG,"LBS starting 2.....");
@@ -105,7 +104,7 @@ public class LBSService extends Service {
         option.setEnableSimulateGps(false);
         option.setIsNeedLocationDescribe(false);
         option.setIsNeedLocationPoiList(false);
-        this.locationClient.setLocOption(option);
+        locationClient.setLocOption(option);
     }
 
     @Override
