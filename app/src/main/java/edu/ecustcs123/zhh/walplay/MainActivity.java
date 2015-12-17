@@ -19,6 +19,7 @@ public class MainActivity extends android.support.v7.app.ActionBarActivity imple
     private ViewPager viewPager;
     private android.support.v7.app.ActionBar actionBar;
     private PlayerPanelFragment playerPanelFragment;
+    private boolean bPlayerPanelFragment =false;
 
 
     @Override
@@ -32,9 +33,13 @@ public class MainActivity extends android.support.v7.app.ActionBarActivity imple
 
         FragmentManager fragmentManager=getSupportFragmentManager();
         android.support.v4.app.FragmentTransaction transaction = fragmentManager.beginTransaction();
-        playerPanelFragment = new PlayerPanelFragment();
-        transaction.add(R.id.fragmentContainer_controlPanel,playerPanelFragment);
-        transaction.commit();
+        if(!bPlayerPanelFragment){
+            playerPanelFragment = new PlayerPanelFragment();
+            transaction.add(R.id.fragmentContainer_controlPanel,playerPanelFragment);
+            transaction.commit();
+            bPlayerPanelFragment = true;
+        }
+
         initActionBar();
 
     }

@@ -79,7 +79,10 @@ public class ListFragment extends Fragment {
             getActivity().startService(intent);
 
             //跳转详情界面
+            getFragmentManager().beginTransaction().replace(R.id.Info_Fragment,new InfoFragment()).addToBackStack(null).commit();
             ((ViewPager)getActivity().findViewById(R.id.MainViewPager)).setCurrentItem(1);
+
+
 
             /*getFragmentManager().beginTransaction().replace(R.id.List_Fragment,new InfoFragment()).addToBackStack(null).commit();*/
         }

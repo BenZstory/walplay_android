@@ -94,7 +94,7 @@ public class InfoFragment extends Fragment {
         mTabHost.addTab(mTabHost.newTabSpec("tab_3").setIndicator(tabIndicator3).setContent(intent));
 
 
-        pager.setAdapter(new MyPageAdapter(listviews));
+        pager.setAdapter(new mPageAdapter(listviews));
         pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
@@ -158,11 +158,11 @@ public class InfoFragment extends Fragment {
         super.onDetach();
     }
 
-    private class MyPageAdapter extends PagerAdapter {
+    private class mPageAdapter extends PagerAdapter {
 
         private List<View> list;
 
-        private MyPageAdapter(List<View> list) {
+        private mPageAdapter(List<View> list) {
             this.list = list;
         }
 
