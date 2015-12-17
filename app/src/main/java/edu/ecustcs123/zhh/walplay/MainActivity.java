@@ -1,5 +1,7 @@
 package edu.ecustcs123.zhh.walplay;
 
+import android.content.Intent;
+import android.support.annotation.DrawableRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -8,13 +10,19 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
+import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.security.auth.Destroyable;
+
 public class MainActivity extends android.support.v7.app.ActionBarActivity implements android.support.v7.app.ActionBar.TabListener,ViewPager.OnPageChangeListener{
 
+    public PlayingInfo playingInfo = new PlayingInfo();
+    private List<Mp3Info> mp3Infos;
     private List<ActionBarTab> tabsList = new ArrayList<ActionBarTab>(2);
     private ViewPager viewPager;
     private android.support.v7.app.ActionBar actionBar;
@@ -22,10 +30,60 @@ public class MainActivity extends android.support.v7.app.ActionBarActivity imple
     private boolean bPlayerPanelFragment =false;
 
 
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        if (playingInfo.isPlaying()) {
+            //暂停
+            Intent intent=new Intent();
+            findViewById(R.id.btn_playerPlayMusic).setBackgroundResource(R.drawable.glyphicons_play);
+            playingInfo.setIsPlaying(false);
+            playingInfo.setIsPause(true);
+            intent.putExtra("MSG", AppConstant.PlayerMsg.PAUSE_MSG);
+            intent.setAction(AppConstant.ACTION.MUSIC_SERVICE);
+            intent.setPackage("edu.ecustcs123.zhh.walplay");
+            startService(intent);
+        }
+
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        if (playingInfo.isPause()) {
+            //恢复播放
+            Intent intent = new Intent();
+            findViewById(R.id.btn_playerPlayMusic).setBackgroundResource(R.drawable.glyphicons_pause);
+            playingInfo.setIsPlaying(true);
+            playingInfo.setIsPause(false);
+            intent.putExtra("MSG", AppConstant.PlayerMsg.CONTINUE_MSG);
+            intent.setAction(AppConstant.ACTION.MUSIC_SERVICE);
+            intent.setPackage("edu.ecustcs123.zhh.walplay");
+            startService(intent);
+
+        } else {
+            //首次播放
+            playingInfo.setIsPlaying(true);
+            playingInfo.setIsPause(false);
+            mp3Infos=MusicListUtil.getMp3Infos(this);
+            if (mp3Infos.size() < 1) {
+                //没有可播放的
+                playingInfo.setIsPlaying(false);
+                playingInfo.setIsPause(false);
+                Toast.makeText(this, "当前列表没有音乐可播放", Toast.LENGTH_SHORT).show();
+                return;
+            }
+        }
+    }
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         //加载各个Fragment
         tabsList.add(new ActionBarTab("列表",ListFragment.class));
@@ -153,6 +211,7 @@ public class MainActivity extends android.support.v7.app.ActionBarActivity imple
             return null;
 
         }
+
 
 
         @Override

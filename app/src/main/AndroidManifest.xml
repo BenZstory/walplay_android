@@ -23,10 +23,9 @@
         </service>
 
         <activity android:name=".TestMainActivity"></activity>
-        <activity android:name=".T1Activity" />
-        <activity android:name=".T2Activity" />
-        <activity android:name=".T3Activity" />
-        <activity android:name=".EmptyActivity" />
+        <activity android:name=".TabSpotPicActivity" />
+        <activity android:name=".TabSpotCommentActivity" />
+        <activity android:name=".TabSpotMoreInfoActivity" />
         <activity android:name=".MainActivity">
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />

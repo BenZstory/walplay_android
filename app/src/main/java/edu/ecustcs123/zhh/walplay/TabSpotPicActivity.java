@@ -1,12 +1,10 @@
 package edu.ecustcs123.zhh.walplay;
 
 import android.app.Activity;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
-import android.widget.Toast;
 
-public class T1Activity extends Activity {
+public class TabSpotPicActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -14,7 +12,7 @@ public class T1Activity extends Activity {
         super.onCreate(savedInstanceState);
 
 
-        setContentView(R.layout.activity_t1);
+        setContentView(R.layout.activity_tab_spot_pic);
         ((ImageView) findViewById(R.id.CurrentSpotPic)).setBackgroundResource(R.drawable.bfzn_006);
     }
 }

@@ -78,7 +78,8 @@ public class ListFragment extends Fragment {
             intent.setPackage("edu.ecustcs123.zhh.walplay");
             getActivity().startService(intent);
 
-            //跳转详情界面
+            //更新PlayPanelFragment 跳转到详情界面
+            getFragmentManager().beginTransaction().replace(R.id.fragmentContainer_controlPanel,new PlayerPanelFragment()).addToBackStack(null).commit();
             getFragmentManager().beginTransaction().replace(R.id.Info_Fragment,new InfoFragment()).addToBackStack(null).commit();
             ((ViewPager)getActivity().findViewById(R.id.MainViewPager)).setCurrentItem(1);
 
