@@ -65,7 +65,7 @@ public class LBSService extends Service {
             LatLng ll = new LatLng(latitude,longitude);
             Log.d(AppConstant.LOG.WPLBSDEBUG,"Receive location");
             Intent intent = new Intent(AppConstant.ACTION.GET_LOC);
-            intent.putExtra("locTyep",bdLocation.getLocType());
+            intent.putExtra("locType",bdLocation.getLocType());
             Log.d(AppConstant.LOG.WPLBSDEBUG+"err", String.valueOf(bdLocation.getLocType()));
             intent.putExtra("latitude",bdLocation.getLatitude());
             intent.putExtra("longitude",bdLocation.getLongitude());
@@ -102,11 +102,10 @@ public class LBSService extends Service {
         LatLng spot = new LatLng(lat,lng);
         double distance = DistanceUtil.getDistance(posNow,spot);
         Log.d(AppConstant.LOG.WPLBSDEBUG+"_dis", String.valueOf(distance));
-        if(isInSpot) return 1;
-        else return -1;
-        /*
-        if(distance<20) return 1;
+        /*if(isInSpot) return 1;
         else return -1;*/
+        if(distance<50) return 1;
+        else return -1;
     }
 
     /**

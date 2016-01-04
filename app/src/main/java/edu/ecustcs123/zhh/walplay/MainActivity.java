@@ -10,10 +10,12 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -23,8 +25,13 @@ import javax.security.auth.Destroyable;
 
 public class MainActivity extends android.support.v7.app.ActionBarActivity implements android.support.v7.app.ActionBar.TabListener,ViewPager.OnPageChangeListener{
 
+    private DrawerLayout drawerLayout;
+    private ListView drawerListView;
+    private String[] drawerTitles;
+
+
     private List<Mp3Info> mp3Infos;
-    private List<ActionBarTab> tabsList = new ArrayList<ActionBarTab>(2);
+    private List<ActionBarTab> tabsList = new ArrayList<ActionBarTab>(3);
     private ViewPager viewPager;
     private android.support.v7.app.ActionBar actionBar;
     private PlayerPanelFragment playerPanelFragment;
@@ -91,6 +98,7 @@ public class MainActivity extends android.support.v7.app.ActionBarActivity imple
         //加载各个Fragment
         tabsList.add(new ActionBarTab("列表",ListFragment.class));
         tabsList.add(new ActionBarTab("详情",InfoFragment.class));
+        tabsList.add(new ActionBarTab("地图",MapFragment.class));
 
         FragmentManager fragmentManager=getSupportFragmentManager();
         android.support.v4.app.FragmentTransaction transaction = fragmentManager.beginTransaction();

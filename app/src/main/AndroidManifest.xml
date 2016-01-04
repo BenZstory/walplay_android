@@ -24,7 +24,6 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
@@ -36,15 +35,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".LoginActivity">
 
-        <activity android:name=".MapActivity" />
+        </activity>
+        <activity android:name=".RegisterActivity"></activity>
+        <activity android:name=".MapActivity">
+
+        </activity>
         <activity android:name=".TabSpotPicActivity" />
         <activity android:name=".TabSpotCommentActivity" />
         <activity android:name=".TabSpotMoreInfoActivity" />
-        <!--BaiduMapService-->
+        <!-- BaiduMapService -->
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="rzUYOCmspwVk7LSUKdlBQ6NL" />
+            android:value="D2TEwIfaIKYUutGOrPb6fOco" />
         <service
             android:name=".LBSService"
             android:enabled="true"
@@ -53,16 +57,17 @@
                 <action android:name="edu.ecustcs123.zhh.walplay.action.START_LBS" />
             </intent-filter>
         </service>
-        <service android:name="com.baidu.location.f" android:enabled="true" android:process=":remote">
-        </service>
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote" />
 
-        <!--Other Services-->
+        <!-- Other Services -->
         <service android:name=".PlayerService">
             <intent-filter>
                 <action android:name="edu.ecustcs123.zhh.walplay.PLAYER_SERVICE" />
             </intent-filter>
         </service>
-
         <service
             android:name=".SpotService"
             android:enabled="true"
@@ -72,5 +77,7 @@
             </intent-filter>
         </service>
 
+
     </application>
+
 </manifest>

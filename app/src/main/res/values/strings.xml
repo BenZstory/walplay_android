@@ -23,6 +23,17 @@
     <string name="pic_folder_name">walplay_pic</string>
 
 
+    <!--Login.aty-->
+    <string name="login">登陆</string>
+    <string name="register">注册</string>
+    <string name="username">用户名</string>
+    <string name="password">请输入密码</string>
+    <string name="cellNumber">请输入手机号码</string>
+    <string name="inputPassword">请输入密码</string>
+    <string name="inputCellNumber">请输入手机号码</string>
+    <string name="sendSMSCode">发送短信验证码</string>
+
+
     <!-- testtesttest-->
     <string name="success">success</string>
     <string name="error">error</string>

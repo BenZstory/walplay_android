@@ -44,11 +44,8 @@ public class DownloadThread extends Thread{
         this.downLength = downLength;
     }
 
-
-
-
     @Override
-    public void run() {
+       public void run() {
         if(downLength<block) {//未下载完成
             try{
                 HttpURLConnection http =

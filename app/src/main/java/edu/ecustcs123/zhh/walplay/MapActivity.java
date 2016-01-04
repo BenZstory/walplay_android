@@ -126,13 +126,13 @@ public class MapActivity extends AppCompatActivity {
         LocationClientOption option = new LocationClientOption();
         option.setCoorType("bd09ll");
         int span=1000;
-        option.setScanSpan(span);//��ѡ��Ĭ��0��������λһ�Σ����÷���λ����ļ����Ҫ���ڵ���1000ms������Ч��
-        option.setOpenGps(true);//��ѡ��Ĭ��false,�����Ƿ�ʹ��gps
-        option.setLocationNotify(true);//��ѡ��Ĭ��false�������Ƿ�gps��Чʱ����1S1��Ƶ�����GPS���
-        option.setIgnoreKillProcess(true);//��ѡ��Ĭ��true����λSDK�ڲ���һ��SERVICE�����ŵ��˶������̣������Ƿ���stop��ʱ��ɱ��������̣�Ĭ�ϲ�ɱ��
-        option.setEnableSimulateGps(false);//��ѡ��Ĭ��false�������Ƿ���Ҫ����gps��������Ĭ����Ҫ
-        option.setIsNeedLocationDescribe(true);//��ѡ��Ĭ��false�������Ƿ���Ҫλ�����廯�����������BDLocation.getLocationDescribe��õ�����������ڡ��ڱ����찲�Ÿ�����
-        option.setIsNeedLocationPoiList(true);//��ѡ��Ĭ��false�������Ƿ���ҪPOI�����������BDLocation.getPoiList��õ�
+        option.setScanSpan(span);
+        option.setOpenGps(true);
+        option.setLocationNotify(true);
+        option.setIgnoreKillProcess(true);
+        option.setEnableSimulateGps(false);
+        option.setIsNeedLocationDescribe(true);
+        option.setIsNeedLocationPoiList(true);
         locationClient.setLocOption(option);
     }
 

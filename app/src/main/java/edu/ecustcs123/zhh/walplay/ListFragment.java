@@ -158,7 +158,7 @@ public class ListFragment extends Fragment {
                 Log.d(AppConstant.LOG.WPLBSDEBUG,"Get LBS return!");
                 tv_latitude.setText(String.valueOf(intent.getDoubleExtra("latitude",0.0)));
                 tv_longitude.setText(String.valueOf(intent.getDoubleExtra("longitude",0.0)));
-                tv_errCode.setText(String.valueOf(intent.getIntExtra("locTyep",-1)));
+                tv_errCode.setText(String.valueOf(intent.getIntExtra("locType",-1)));
             }else if(action.equals(AppConstant.ACTION.NOTIFY_SPOT)){
                 int spotId = intent.getIntExtra("locArea",-1);
                 Log.d(AppConstant.LOG.WPLBSDEBUG+"_receiveSpot", String.valueOf(spotId));
