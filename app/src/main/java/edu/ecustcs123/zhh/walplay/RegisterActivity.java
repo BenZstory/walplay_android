@@ -1,6 +1,8 @@
 package edu.ecustcs123.zhh.walplay;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,6 +18,7 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -29,6 +32,7 @@ public class RegisterActivity extends AppCompatActivity {
     private Button btn_verify;
     private Button btn_register;
     private RequestQueue requestQueue;
+    private SharedPreferences sharedPreferences;
 
 
     @Override
@@ -39,6 +43,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void init(){
+        sharedPreferences = this.getPreferences(MODE_PRIVATE);
         et_regCell = (EditText) findViewById(R.id.regCell);
         et_regPassword = (EditText) findViewById(R.id.regPassword);
         et_smsCode = (EditText) findViewById(R.id.smsCode);
@@ -72,6 +77,20 @@ public class RegisterActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         //TODO something
+                        try {
+                            int errCode = response.getInt("code");
+                            if(errCode == 1){//成功注册
+                                String token = response.getString("token");
+                                String cell = response.getString("cell");
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.putString(AppConstant.PrefKey.user_cell, cell);
+                                editor.putString(AppConstant.PrefKey.user_token, token);
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
                         VolleyLog.v("Response", response.toString());
                         Log.v("volleyResponse",response.toString());
                     }

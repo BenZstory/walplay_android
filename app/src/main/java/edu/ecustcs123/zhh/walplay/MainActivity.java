@@ -3,6 +3,7 @@ package edu.ecustcs123.zhh.walplay;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.support.annotation.DrawableRes;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -13,6 +14,7 @@ import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -30,6 +32,7 @@ public class MainActivity extends android.support.v7.app.ActionBarActivity imple
     private DrawerLayout drawerLayout;
     private ListView drawerListView;
     private String[] drawerTitles;
+    private NavigationView navigationView;
 
 
     private List<Mp3Info> mp3Infos;
@@ -112,11 +115,21 @@ public class MainActivity extends android.support.v7.app.ActionBarActivity imple
         //处理DrawerLayout相关
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawerTitles = getResources().getStringArray(R.array.drawer_titles);
-        drawerListView = (ListView) findViewById(R.id.drawer_view);
+//        drawerListView = (ListView) findViewById(R.id.drawer_view);
+//
+//        drawerListView.setAdapter(new ArrayAdapter<String>(this,
+//                R.layout.drawer_list_item, drawerTitles));
+//        drawerListView.setOnItemClickListener(new DrawerItemClickListener());
 
-        drawerListView.setAdapter(new ArrayAdapter<String>(this,
-                R.layout.drawer_list_item, drawerTitles));
-        drawerListView.setOnItemClickListener(new DrawerItemClickListener());
+        navigationView = (NavigationView) findViewById(R.id.navigation);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem item) {
+                drawerLayout.closeDrawers();
+                Toast.makeText(getApplicationContext(),String.valueOf(item.getItemId()),Toast.LENGTH_LONG).show();
+                return false;
+            }
+        });
     }
 
     private class DrawerItemClickListener implements ListView.OnItemClickListener{
@@ -129,7 +142,6 @@ public class MainActivity extends android.support.v7.app.ActionBarActivity imple
     private void selectItem(int position){
         //TODO index to next page
     }
-
 
     private void initActionBar(){
 
