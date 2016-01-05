@@ -16,8 +16,6 @@ import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -41,7 +39,7 @@ public class MainActivity extends android.support.v7.app.ActionBarActivity imple
     private android.support.v7.app.ActionBar actionBar;
     private PlayerPanelFragment playerPanelFragment;
     private boolean bPlayerPanelFragment =false;
-    private ListFragment.LBSReceiver lbsReceiver;
+    private ListFragment.LBSReceiver lbsReceiver ;
 
 
 
@@ -91,17 +89,20 @@ public class MainActivity extends android.support.v7.app.ActionBarActivity imple
         }
     }
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
 
         //加载各个Fragment
         tabsList.add(new ActionBarTab("列表",ListFragment.class));
         tabsList.add(new ActionBarTab("详情",InfoFragment.class));
         tabsList.add(new ActionBarTab("地图",MapFragment.class));
 
-        //界面下方始终有不变的playerPanelFragment
         FragmentManager fragmentManager=getSupportFragmentManager();
         android.support.v4.app.FragmentTransaction transaction = fragmentManager.beginTransaction();
         if(!bPlayerPanelFragment){
@@ -110,37 +111,9 @@ public class MainActivity extends android.support.v7.app.ActionBarActivity imple
             transaction.commit();
             bPlayerPanelFragment = true;
         }
+
         initActionBar();
 
-        //处理DrawerLayout相关
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawerTitles = getResources().getStringArray(R.array.drawer_titles);
-//        drawerListView = (ListView) findViewById(R.id.drawer_view);
-//
-//        drawerListView.setAdapter(new ArrayAdapter<String>(this,
-//                R.layout.drawer_list_item, drawerTitles));
-//        drawerListView.setOnItemClickListener(new DrawerItemClickListener());
-
-        navigationView = (NavigationView) findViewById(R.id.navigation);
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem item) {
-                drawerLayout.closeDrawers();
-                Toast.makeText(getApplicationContext(),String.valueOf(item.getItemId()),Toast.LENGTH_LONG).show();
-                return false;
-            }
-        });
-    }
-
-    private class DrawerItemClickListener implements ListView.OnItemClickListener{
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            selectItem(position);
-        }
-    }
-
-    private void selectItem(int position){
-        //TODO index to next page
     }
 
     private void initActionBar(){
