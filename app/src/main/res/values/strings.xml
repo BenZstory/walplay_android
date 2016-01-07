@@ -33,6 +33,10 @@
     <string name="inputCellNumber">请输入手机号码</string>
     <string name="sendSMSCode">发送短信验证码</string>
 
+    <!-- nav-->
+    <string name="userName_notLogged">请先登录</string>
+
+
 
     <!-- testtesttest-->
     <string name="success">success</string>

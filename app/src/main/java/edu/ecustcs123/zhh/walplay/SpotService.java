@@ -10,6 +10,7 @@ import java.io.File;
 import java.util.UUID;
 import edu.ecustcs123.zhh.walplay.DownloadUtils.DownloadProgressListener;
 import edu.ecustcs123.zhh.walplay.DownloadUtils.FileDownloader;
+import edu.ecustcs123.zhh.walplay.Utils.AppConstant;
 
 public class SpotService extends Service {
     private DownloadTask task;

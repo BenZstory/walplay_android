@@ -1,49 +1,55 @@
 package edu.ecustcs123.zhh.walplay;
 
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.support.annotation.DrawableRes;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.text.Layout;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
+import android.support.v7.widget.Toolbar;
 
-import java.util.ArrayList;
+
 import java.util.List;
+import java.util.zip.Inflater;
 
-import javax.security.auth.Destroyable;
+import edu.ecustcs123.zhh.walplay.Utils.AppConstant;
+import edu.ecustcs123.zhh.walplay.Utils.AppStatus;
+import edu.ecustcs123.zhh.walplay.Utils.Mp3Info;
+import edu.ecustcs123.zhh.walplay.Utils.MusicListUtil;
+import edu.ecustcs123.zhh.walplay.Utils.PagerAdapter;
 
-public class MainActivity extends android.support.v7.app.ActionBarActivity implements android.support.v7.app.ActionBar.TabListener,ViewPager.OnPageChangeListener{
+public class MainActivity extends AppCompatActivity{
 
     private DrawerLayout drawerLayout;
     private ListView drawerListView;
     private String[] drawerTitles;
     private NavigationView navigationView;
-
+    private Toolbar toolbar;
 
     private List<Mp3Info> mp3Infos;
-    private List<ActionBarTab> tabsList = new ArrayList<ActionBarTab>(3);
     private ViewPager viewPager;
-    private android.support.v7.app.ActionBar actionBar;
     private PlayerPanelFragment playerPanelFragment;
     private boolean bPlayerPanelFragment =false;
     private ListFragment.LBSReceiver lbsReceiver;
 
+    private AppStatus appStatus;
 
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//
+//    }
 
     @Override
     protected void onPause(){
@@ -59,7 +65,6 @@ public class MainActivity extends android.support.v7.app.ActionBarActivity imple
             intent.setPackage("edu.ecustcs123.zhh.walplay");
             startService(intent);
         }
-
     }
 
     @Override
@@ -80,7 +85,7 @@ public class MainActivity extends android.support.v7.app.ActionBarActivity imple
             //首次播放
             playerPanelFragment.playingInfo.setIsPlaying(true);
             playerPanelFragment.playingInfo.setIsPause(false);
-            mp3Infos=MusicListUtil.getMp3Infos(this);
+            mp3Infos= MusicListUtil.getMp3Infos(this);
             if (mp3Infos.size() < 1) {
                 //没有可播放的
                 playerPanelFragment. playingInfo.setIsPlaying(false);
@@ -96,13 +101,8 @@ public class MainActivity extends android.support.v7.app.ActionBarActivity imple
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //加载各个Fragment
-        tabsList.add(new ActionBarTab("列表",ListFragment.class));
-        tabsList.add(new ActionBarTab("详情",InfoFragment.class));
-        tabsList.add(new ActionBarTab("地图",MapFragment.class));
-
         //界面下方始终有不变的playerPanelFragment
-        FragmentManager fragmentManager=getSupportFragmentManager();
+        FragmentManager fragmentManager = getSupportFragmentManager();
         android.support.v4.app.FragmentTransaction transaction = fragmentManager.beginTransaction();
         if(!bPlayerPanelFragment){
             playerPanelFragment = new PlayerPanelFragment();
@@ -110,24 +110,55 @@ public class MainActivity extends android.support.v7.app.ActionBarActivity imple
             transaction.commit();
             bPlayerPanelFragment = true;
         }
-        initActionBar();
+
+        //toolbar
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        final ActionBar ab = getSupportActionBar();
+        ab.setHomeAsUpIndicator(R.drawable.ic_menu);
+        ab.setDisplayHomeAsUpEnabled(false);
+
+        //viewpager
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        setupViewPager(viewPager);
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(viewPager);
 
         //处理DrawerLayout相关
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawerTitles = getResources().getStringArray(R.array.drawer_titles);
-//        drawerListView = (ListView) findViewById(R.id.drawer_view);
-//
-//        drawerListView.setAdapter(new ArrayAdapter<String>(this,
-//                R.layout.drawer_list_item, drawerTitles));
-//        drawerListView.setOnItemClickListener(new DrawerItemClickListener());
-
         navigationView = (NavigationView) findViewById(R.id.navigation);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
                 drawerLayout.closeDrawers();
-                Toast.makeText(getApplicationContext(),String.valueOf(item.getItemId()),Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), String.valueOf(item.getItemId()), Toast.LENGTH_LONG).show();
                 return false;
+            }
+        });
+
+        appStatus =(AppStatus) getApplicationContext();
+        init();
+    }
+
+    private void init(){
+//        View headerView = navigationView.findViewById()
+        int a = navigationView.getHeaderCount();
+        View headerView = navigationView.getHeaderView(0);
+        TextView nav_user = (TextView) headerView.findViewById(R.id.nav_tv_userName);
+
+        nav_user.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(AppConstant.LOG.WPDLOGIN,"nav_user clicked");
+
+                if(false){//已经登陆，跳转到个人信息aty
+
+                }else{//尚未登陆，跳转到register.aty
+                    Intent intent = new Intent();
+                    intent.setClass(v.getContext(), LoginActivity.class);
+                    startActivity(intent);
+                }
             }
         });
     }
@@ -135,134 +166,21 @@ public class MainActivity extends android.support.v7.app.ActionBarActivity imple
     private class DrawerItemClickListener implements ListView.OnItemClickListener{
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            selectItem(position);
+            SelectDrawerItem(position);
         }
     }
 
-    private void selectItem(int position){
+    private void SelectDrawerItem(int position){
         //TODO index to next page
     }
 
-    private void initActionBar(){
-
-        viewPager = (ViewPager) this.findViewById(R.id.MainViewPager);
-        actionBar = getSupportActionBar();
-        actionBar.setNavigationMode(android.support.v7.app.ActionBar.NAVIGATION_MODE_TABS);
-        //去除默认ActionBar
-        actionBar.setDisplayShowHomeEnabled(false);
-        actionBar.setDisplayShowTitleEnabled(false);
-
-
-        //循环遍历 初始化Actionbar中的Tab
-        for(ActionBarTab tab:tabsList){
-            android.support.v7.app.ActionBar.Tab T = actionBar.newTab();
-            T.setText(tab.getText());
-            T.setTabListener(this);
-            actionBar.addTab(T);
-        }
-        viewPager.setAdapter(new TabFragmentPagerAdapter(getSupportFragmentManager()));
-        viewPager.setOnPageChangeListener(this);
+    private void setupViewPager(ViewPager viewPager) {
+        PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(new ListFragment(), "列表");
+        adapter.addFragment(new InfoFragment(), "详情");
+        adapter.addFragment(new MapFragment(), "地图");
+        viewPager.setAdapter(adapter);
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-    }
-
-    @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-    }
-
-    @Override
-    public void onPageSelected(int position) {
-        actionBar.selectTab(actionBar.getTabAt(position));
-
-    }
-
-    @Override
-    public void onPageScrollStateChanged(int state) {
-
-    }
-
-
-
-
-    @Override
-    public void onTabSelected(ActionBar.Tab tab, android.support.v4.app.FragmentTransaction ft) {
-        viewPager.setCurrentItem(tab.getPosition());
-    }
-
-    @Override
-    public void onTabUnselected(ActionBar.Tab tab, android.support.v4.app.FragmentTransaction ft) {
-
-    }
-
-    @Override
-    public void onTabReselected(ActionBar.Tab tab, android.support.v4.app.FragmentTransaction ft) {
-
-    }
-
-
-    /**
-     *ActionBar中的Tab类
-     */
-    class ActionBarTab {
-        private String text; // 标题的文字
-        private Class fragment;// 每一个tab所对应的页面fragment
-
-        public String getText() {
-            return text;
-        }
-
-        public void setText(String text) {
-            this.text = text;
-        }
-
-        public Class getFragment() {
-            return fragment;
-        }
-
-        public void setFragment(Class fragment) {
-            this.fragment = fragment;
-        }
-
-        /**
-         * 两个参数的构造方法，便于创建一个对象
-         */
-        public ActionBarTab(String string, Class fragment) {
-            this.text = string;
-            this.fragment = fragment;
-        }
-    }
-    /**
-     * 为viewpager设置的适配器
-     */
-    class TabFragmentPagerAdapter extends FragmentPagerAdapter{
-
-        public TabFragmentPagerAdapter(android.support.v4.app.FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public android.support.v4.app.Fragment getItem(int position) {
-            try {
-                return (Fragment) tabsList.get(position).getFragment().newInstance();
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
-            return null;
-
-        }
-
-
-
-        @Override
-        public int getCount() {
-            return tabsList.size();
-        }
-    }
 }
+

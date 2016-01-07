@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -23,6 +24,7 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 
+import edu.ecustcs123.zhh.walplay.Utils.AppConstant;
 import edu.ecustcs123.zhh.walplay.Utils.Coding;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -58,12 +60,12 @@ public class RegisterActivity extends AppCompatActivity {
         btn_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Register();
+                Register(v.getContext());
             }
         });
     }
 
-    private void Register(){
+    private void Register(final Context context){
         String cell = String.valueOf(et_regCell.getText());
         String password = Coding.MD5(String.valueOf(et_regPassword.getText()));
         String url = AppConstant.URL_domain+"register";
@@ -79,20 +81,24 @@ public class RegisterActivity extends AppCompatActivity {
                         //TODO something
                         try {
                             int errCode = response.getInt("code");
-                            if(errCode == 1){//成功注册
+                            if(errCode == 0){//成功注册
                                 String token = response.getString("token");
                                 String cell = response.getString("cell");
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
                                 editor.putString(AppConstant.PrefKey.user_cell, cell);
                                 editor.putString(AppConstant.PrefKey.user_token, token);
-                            }
+                                Toast.makeText(getApplicationContext(), "成功注册", Toast.LENGTH_SHORT).show();
 
+                                //直接跳转到login
+                                Intent intent = new Intent();
+                                intent.setClass(context, LoginActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
-                        VolleyLog.v("Response", response.toString());
-                        Log.v("volleyResponse",response.toString());
+                        Log.d(AppConstant.LOG.WPDVolley, String.valueOf(response));
                     }
                 },
                 new Response.ErrorListener() {

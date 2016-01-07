@@ -1,13 +1,13 @@
-package edu.ecustcs123.zhh.walplay;
+package edu.ecustcs123.zhh.walplay.Utils;
 
 import android.content.Context;
 import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
-
 /**
- * Created by Administrator on 2015/12/11.
+ * Created by BenZ on 15.12.11.
+ * zhengbin0320@gmail.com
  */
 public class MarqueeTextView extends TextView{
     public MarqueeTextView(Context con){

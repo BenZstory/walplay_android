@@ -21,6 +21,10 @@ import android.widget.TextView;
 import java.util.HashMap;
 import java.util.List;
 
+import edu.ecustcs123.zhh.walplay.Utils.AppConstant;
+import edu.ecustcs123.zhh.walplay.Utils.Mp3Info;
+import edu.ecustcs123.zhh.walplay.Utils.MusicListUtil;
+
 public class ListFragment extends Fragment {
     //List Panel
     private ListView mMusicListView;//列表view
@@ -135,7 +139,7 @@ public class ListFragment extends Fragment {
             //跳转详情界面
             getFragmentManager().beginTransaction().replace(R.id.fragmentContainer_controlPanel,new PlayerPanelFragment()).addToBackStack(null).commit();
             getFragmentManager().beginTransaction().replace(R.id.Info_Fragment,new InfoFragment()).addToBackStack(null).commit();
-            ((ViewPager)getActivity().findViewById(R.id.MainViewPager)).setCurrentItem(1);
+            ((ViewPager)getActivity().findViewById(R.id.viewpager)).setCurrentItem(1);
 
             /*getFragmentManager().beginTransaction().replace(R.id.List_Fragment,new InfoFragment()).addToBackStack(null).commit();*/
         }

@@ -16,6 +16,8 @@ import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.utils.DistanceUtil;
 
+import edu.ecustcs123.zhh.walplay.Utils.AppConstant;
+
 public class LBSService extends Service {
     private LocationClient locationClient = null;
     private MyLocationListener myLocationListener = new MyLocationListener();

@@ -19,6 +19,9 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.ecustcs123.zhh.walplay.Utils.AppConstant;
+import edu.ecustcs123.zhh.walplay.Utils.CurrentInfo;
+
 
 /**
  * A simple {@link Fragment} subclass.

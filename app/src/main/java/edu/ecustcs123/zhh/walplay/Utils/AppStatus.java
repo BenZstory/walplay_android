@@ -1,10 +1,13 @@
 package edu.ecustcs123.zhh.walplay.Utils;
 
+import android.app.Application;
+
 /**
- * Created by Benjamin Zheng on 16.1.5.
+ * Created by BenZ on 16.1.5.
+ * zhengbin0320@gmail.com
  */
-public class AppStatus {
-    private boolean isLogin;
+public class AppStatus extends Application {
+    private boolean isLogin = false;
     private int userId;
 
     public int getUserId() {

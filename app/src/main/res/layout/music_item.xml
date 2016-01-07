@@ -9,7 +9,7 @@
         android:layout_weight="0.75"
         android:orientation="vertical"
         >
-        <edu.ecustcs123.zhh.walplay.MarqueeTextView
+        <edu.ecustcs123.zhh.walplay.Utils.MarqueeTextView
             android:singleLine="true"
             android:ellipsize="marquee"
             android:marqueeRepeatLimit="marquee_forever"
@@ -18,7 +18,7 @@
             android:id="@+id/tv_itemMusicName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
-        <edu.ecustcs123.zhh.walplay.MarqueeTextView
+        <edu.ecustcs123.zhh.walplay.Utils.MarqueeTextView
             android:singleLine="true"
             android:ellipsize="marquee"
             android:marqueeRepeatLimit="marquee_forever"

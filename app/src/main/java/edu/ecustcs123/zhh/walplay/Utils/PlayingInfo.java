@@ -1,11 +1,11 @@
-package edu.ecustcs123.zhh.walplay;
+package edu.ecustcs123.zhh.walplay.Utils;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.text.BoringLayout;
 
 /**
- * Created by zheng on 15.12.10.
+ * Created by BenZ on 15.12.10.
+ * zhengbin0320@gmail.com
  */
 public class PlayingInfo implements Parcelable {
     private String musicTitle;

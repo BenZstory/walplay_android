@@ -1,7 +1,6 @@
 package edu.ecustcs123.zhh.walplay;
 
 import android.app.ActivityManager;
-import android.app.Fragment;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -19,6 +18,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
+
+import edu.ecustcs123.zhh.walplay.Utils.AppConstant;
+import edu.ecustcs123.zhh.walplay.Utils.Mp3Info;
+import edu.ecustcs123.zhh.walplay.Utils.MusicListUtil;
+import edu.ecustcs123.zhh.walplay.Utils.PlayingInfo;
 
 public class PlayerPanelFragment extends android.support.v4.app.Fragment {
     public PlayingInfo playingInfo = new PlayingInfo();
@@ -139,7 +143,7 @@ public class PlayerPanelFragment extends android.support.v4.app.Fragment {
             switch (v.getId()) {
                 case R.id.tv_titlePlayingMusic:
                     //跳转详情界面
-                    ((ViewPager)getActivity().findViewById(R.id.MainViewPager)).setCurrentItem(1);
+                    ((ViewPager)getActivity().findViewById(R.id.viewpager)).setCurrentItem(1);
                     break;
                 case R.id.btn_playerPlayMode:
                     //更改播放模式

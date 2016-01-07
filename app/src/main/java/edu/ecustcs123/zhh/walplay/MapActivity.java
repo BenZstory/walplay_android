@@ -22,6 +22,8 @@ import com.baidu.mapapi.map.MyLocationConfiguration;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
 
+import edu.ecustcs123.zhh.walplay.Utils.AppConstant;
+
 public class MapActivity extends AppCompatActivity {
     private LocationClient locationClient = null;
     public MyLocationListener myLocationListener = new MyLocationListener();

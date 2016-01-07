@@ -28,7 +28,7 @@
                 android:textStyle="bold"
                 android:id="@+id/CurrentSpotDetailName" />
 
-            <edu.ecustcs123.zhh.walplay.MarqueeTextView
+            <edu.ecustcs123.zhh.walplay.Utils.MarqueeTextView
                 android:selectAllOnFocus="true"
                 android:singleLine="true"
                 android:ellipsize="marquee"
