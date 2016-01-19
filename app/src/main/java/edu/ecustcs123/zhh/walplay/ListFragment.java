@@ -128,20 +128,26 @@ public class ListFragment extends Fragment {
         //TODO:不仅只是播放，还应有别的按钮，如何使item部分被点击
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            Log.d("WP_Clicked------", String.valueOf(position));
+            /*Log.d("WP_Clicked------", String.valueOf(position));
             Intent intent  = new Intent();
             intent.putExtra("MSG", AppConstant.PlayerMsg.PLAY_MSG);
             intent.putExtra("listPos", position);
             intent.setAction(AppConstant.ACTION.MUSIC_SERVICE);
             intent.setPackage("edu.ecustcs123.zhh.walplay");
-            getActivity().startService(intent);
+            getActivity().startService(intent);*/
+
+            //jump to SpotDetailActivity
+            Intent detailAty = new Intent();
+            detailAty.setClass(getContext(), SpotDetailActivity.class);
+            detailAty.putExtra("spot_id", position);
+            startActivity(detailAty);
 
             //跳转详情界面
-            getFragmentManager().beginTransaction().replace(R.id.fragmentContainer_controlPanel,new PlayerPanelFragment()).addToBackStack(null).commit();
-            getFragmentManager().beginTransaction().replace(R.id.Info_Fragment,new InfoFragment()).addToBackStack(null).commit();
-            ((ViewPager)getActivity().findViewById(R.id.viewpager)).setCurrentItem(1);
+//            getFragmentManager().beginTransaction().replace(R.id.fragmentContainer_controlPanel,new PlayerPanelFragment()).addToBackStack(null).commit();
+//            getFragmentManager().beginTransaction().replace(R.id.Info_Fragment,new InfoFragment2()).addToBackStack(null).commit();
+//            ((ViewPager)getActivity().findViewById(R.id.viewpager)).setCurrentItem(1);
 
-            /*getFragmentManager().beginTransaction().replace(R.id.List_Fragment,new InfoFragment()).addToBackStack(null).commit();*/
+            /*getFragmentManager().beginTransaction().replace(R.id.List_Fragment,new InfoFragment2()).addToBackStack(null).commit();*/
         }
     }
 

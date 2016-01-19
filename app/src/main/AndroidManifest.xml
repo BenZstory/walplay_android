@@ -3,7 +3,9 @@
     package="edu.ecustcs123.zhh.walplay">
 
     <uses-permission android:name="android.permission.SET_DEBUG_APP" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="23" />
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="23" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -36,13 +38,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity">
-
-        </activity>
-        <activity android:name=".RegisterActivity"></activity>
-        <activity android:name=".MapActivity">
-
-        </activity>
+        <activity android:name=".LoginActivity"></activity>
+        <activity android:name=".RegisterActivity" />
+        <activity android:name=".MapActivity"></activity>
         <activity android:name=".TabSpotPicActivity" />
         <activity android:name=".TabSpotCommentActivity" />
         <activity android:name=".TabSpotMoreInfoActivity" />
@@ -50,6 +48,7 @@
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="D2TEwIfaIKYUutGOrPb6fOco" />
+
         <service
             android:name=".LBSService"
             android:enabled="true"
@@ -78,7 +77,10 @@
             </intent-filter>
         </service>
 
-
+        <activity
+            android:name=".SpotDetailActivity"
+            android:label="@string/title_activity_spot_detail"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

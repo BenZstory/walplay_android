@@ -17,12 +17,12 @@
         >
 
         <EditText
-            android:id="@+id/tv_loginCell"
+            android:id="@+id/et_loginCell"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/inputCellNumber"/>
         <EditText
-            android:id="@+id/tv_loginPwd"
+            android:id="@+id/et_loginPwd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"

@@ -20,6 +20,8 @@
         <menu>
             <item android:id="@+id/nav_sub_test_1"
                 android:title="subTest_1"></item>
+            <item android:id="@+id/nav_sub_logout"
+                android:title="Log out"></item>
         </menu>
     </item>
 

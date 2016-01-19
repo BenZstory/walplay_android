@@ -1,0 +1,87 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".InfoFragment2"
+    android:id="@+id/Info_Fragment">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:singleLine="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/Current_Spot_Name_For_Test"
+                android:textStyle="bold"
+                android:id="@+id/CurrentSpotDetailName" />
+
+            <edu.ecustcs123.zhh.walplay.Utils.MarqueeTextView
+                android:selectAllOnFocus="true"
+                android:singleLine="true"
+                android:ellipsize="marquee"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/Current_Spot_Location_For_Test"
+                android:id="@+id/CurrentSpotDetailLocation"
+                android:textStyle="italic"/>
+        </LinearLayout>
+
+        <TextView
+            android:singleLine="true"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Current_Spot_Lever_For_Test"
+            android:id="@+id/CurrentSpotLever"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+    <TabHost
+        android:background="#BFBFBF"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tabHost"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TabWidget
+
+                android:id="@android:id/tabs"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"></TabWidget>
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/viewpager"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" />
+            <!-- 将tabhost的tabcontent隐藏，用viewPage填充 -->
+            <FrameLayout
+                android:id="@android:id/tabcontent"
+                android:visibility="gone"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" >
+            </FrameLayout>
+        </LinearLayout>
+    </TabHost>
+</LinearLayout>
+</FrameLayout>

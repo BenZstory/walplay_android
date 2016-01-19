@@ -74,26 +74,36 @@ public class RegisterActivity extends AppCompatActivity {
         params.put("cell",cell);
         params.put("password",password);
 
+        Log.d(AppConstant.LOG.WPDJson+"url",url);
+        Log.d(AppConstant.LOG.WPDJson+"cell",cell);
+        Log.d(AppConstant.LOG.WPDJson+"password",password);
+
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(params),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        //TODO something
                         try {
                             int errCode = response.getInt("code");
                             if(errCode == 0){//成功注册
                                 String token = response.getString("token");
                                 String cell = response.getString("cell");
-                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                Toast.makeText(getApplicationContext(), "成功注册", Toast.LENGTH_SHORT).show();
+                                /*SharedPreferences.Editor editor = sharedPreferences.edit();
                                 editor.putString(AppConstant.PrefKey.user_cell, cell);
                                 editor.putString(AppConstant.PrefKey.user_token, token);
-                                Toast.makeText(getApplicationContext(), "成功注册", Toast.LENGTH_SHORT).show();
+                                editor.commit();*/
+                                Log.d(AppConstant.LOG.WPDJson+"token",token);
 
                                 //直接跳转到login
                                 Intent intent = new Intent();
                                 intent.setClass(context, LoginActivity.class);
+                                intent.putExtra("cell",cell);
                                 startActivity(intent);
                                 finish();
+                            }
+                            else{
+                                Toast.makeText(getApplicationContext(),"code:"+errCode, Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(),"message:"+response.getString("message"), Toast.LENGTH_LONG).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

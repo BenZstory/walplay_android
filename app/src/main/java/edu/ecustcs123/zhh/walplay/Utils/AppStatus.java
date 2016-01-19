@@ -8,14 +8,23 @@ import android.app.Application;
  */
 public class AppStatus extends Application {
     private boolean isLogin = false;
-    private int userId;
+    private String userToken;
+    private String userName;
 
-    public int getUserId() {
-        return userId;
+    public String getUserToken() {
+        return userToken;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserToken(String userToken) {
+        this.userToken = userToken;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public boolean isLogin() {
