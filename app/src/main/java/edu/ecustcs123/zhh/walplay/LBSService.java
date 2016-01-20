@@ -17,18 +17,22 @@ import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.utils.DistanceUtil;
 
 import edu.ecustcs123.zhh.walplay.Utils.AppConstant;
+import edu.ecustcs123.zhh.walplay.Utils.AppStatus;
 
 public class LBSService extends Service {
     private LocationClient locationClient = null;
     private MyLocationListener myLocationListener = new MyLocationListener();
-    private MyTestListener myTestListener = new MyTestListener();
+    private LBSBroadcastReceiver receiver = new LBSBroadcastReceiver();
     private double latitude;
-    private double Longitude;
+    private double longitude;
+    private double radius;
     private int locType;
     private boolean isNotifying = false;
     private int lastLocArea = -1;
     private static int interval;
     public boolean isInSpot = false;
+
+    private AppStatus appStatus;
 
     public LBSService() {
 
@@ -45,16 +49,23 @@ public class LBSService extends Service {
         locationClient.start();
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(AppConstant.ACTION.CHANGE_SPOT_STATUS);
-        registerReceiver(myTestListener,intentFilter);
+        intentFilter.addAction(AppConstant.ACTION.RETURN_LBS_INFO);
+        registerReceiver(receiver,intentFilter);
+
+        appStatus =(AppStatus) getApplicationContext();
+
         //handler.sendEmptyMessage(1);
         return super.onStartCommand(intent, flags, startId);
     }
 
-    private class MyTestListener extends BroadcastReceiver {
+    private class LBSBroadcastReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if(isInSpot) isInSpot = false;
-            else isInSpot = true;
+            String action = intent.getAction();
+            if(AppConstant.ACTION.RETURN_LBS_INFO.equals(action)){
+
+            }
+
         }
     }
 
@@ -62,17 +73,26 @@ public class LBSService extends Service {
         @Override
         public void onReceiveLocation(BDLocation bdLocation) {
             int locArea = -1;
-            double latitude = bdLocation.getLatitude();
-            double longitude = bdLocation.getLongitude();
+            latitude = bdLocation.getLatitude();
+            longitude = bdLocation.getLongitude();
+            radius = bdLocation.getRadius();
+            locType = bdLocation.getLocType();
             LatLng ll = new LatLng(latitude,longitude);
-            Log.d(AppConstant.LOG.WPLBSDEBUG,"Receive location");
-            Intent intent = new Intent(AppConstant.ACTION.GET_LOC);
-            intent.putExtra("locType",bdLocation.getLocType());
+
             Log.d(AppConstant.LOG.WPLBSDEBUG+"err", String.valueOf(bdLocation.getLocType()));
-            intent.putExtra("latitude",bdLocation.getLatitude());
-            intent.putExtra("longitude",bdLocation.getLongitude());
-            intent.putExtra("radius",bdLocation.getRadius());
+
+            //update in main aty
+            Intent intent = new Intent(AppConstant.ACTION.GET_LOC);
+            intent.putExtra("locType",locType);
+            intent.putExtra("latitude",latitude);
+            intent.putExtra("longitude",longitude);
+            intent.putExtra("radius",radius);
             sendBroadcast(intent);
+
+            appStatus.setLocType(locType);
+            appStatus.setLocLatitude(latitude);
+            appStatus.setLocLongitude(longitude);
+            appStatus.setLocRadius(radius);
 
             //TODO 判断是否进入新spot区域并推送消息,包括locArea以及简介
             //没有在spot外，且与上次locArea不同则推送，没进入一个locArea只推送一次

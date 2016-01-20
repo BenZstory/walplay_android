@@ -22,15 +22,22 @@ import android.widget.Toast;
 import android.support.v7.widget.Toolbar;
 
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import edu.ecustcs123.zhh.walplay.Utils.AppConstant;
 import edu.ecustcs123.zhh.walplay.Utils.AppStatus;
@@ -221,6 +228,80 @@ public class MainActivity extends AppCompatActivity{
     }
 
     private void uploadLoc(){
+        //user have to be logged in
+        if(!appStatus.isLogin()){
+            Toast.makeText(MainActivity.this, "请先登录", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent();
+            intent.setClass(this, LoginActivity.class);
+            startActivity(intent);
+            return;
+        }
+        //check if the ll is suitable for uploading
+        if(appStatus.getLocType()!=-1){
+            Log.d(AppConstant.LOG.WPDStatus, "ready to upload lbs");
+            Log.d(AppConstant.LOG.WPDStatus+"token", appStatus.getUserToken());
+            final String token = appStatus.getUserToken();
+            String url = AppConstant.URL_domain+"add_spot";
+
+            HashMap<String, String> params = new HashMap<>();
+            //params.put("loctype", String.valueOf(appStatus.getLocType()));
+            params.put("latitude", String.valueOf(appStatus.getLocLatitude()));
+            params.put("longitude", String.valueOf(appStatus.getLocLongitude()));
+            params.put("radius", String.valueOf(appStatus.getLocRadius()));
+            params.put("title","default_title");
+            params.put("time","");
+
+            Log.d(AppConstant.LOG.WPDJson+"url",url);
+            Log.d(AppConstant.LOG.WPDJson+"json", String.valueOf(new JSONObject(params)));
+
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                    Request.Method.POST, url,
+                    new JSONObject(params),
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            Log.d(AppConstant.LOG.WPDJson+"response", String.valueOf(response));
+                            int errCode = -1;
+                            int spot_id = 0;
+                            try {
+                                errCode = response.getInt("code");
+                                spot_id = response.getInt("spot_id");
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            if (errCode == 0) {
+                                Log.d(AppConstant.LOG.WPDVolley,"Spot_ID: "+String.valueOf(spot_id));
+                                Toast.makeText(MainActivity.this, "已上传位置信息", Toast.LENGTH_SHORT).show();
+                            }else{
+                                Log.d(AppConstant.LOG.WPDVolley,"Volley err: "+errCode);
+                            }
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.d(AppConstant.LOG.WPDJson+"error", "volley err...");
+                            VolleyLog.e("Error: ", error.getMessage());
+                        }
+                    }
+            ){
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    HashMap<String, String> headers = new HashMap<String, String>();
+                    headers.put("Authorization", appStatus.getUserToken());
+                    Log.d(AppConstant.LOG.WPDVolley+"header", String.valueOf(headers));
+                    return headers;
+                }
+
+                @Override
+                public String getBodyContentType() {
+                    return "application/json";
+                }
+            };
+        }else{
+            Log.d(AppConstant.LOG.WPDStatus, "upload denied");
+            Toast.makeText(MainActivity.this, "地理信息不准确，无法上传", Toast.LENGTH_LONG).show();
+        }
 
     }
 
@@ -268,4 +349,3 @@ public class MainActivity extends AppCompatActivity{
     }
 
 }
-
